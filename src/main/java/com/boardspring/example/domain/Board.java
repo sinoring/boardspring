@@ -4,6 +4,7 @@ public class Board {
 	private int bNum;
 	private int bId;
 	private String bPw;
+	private String bTitle;
 	private String bContent;
 	private String bUser;
 	private String bDate;
@@ -26,6 +27,12 @@ public class Board {
 	}
 	public void setbPw(String bPw) {
 		this.bPw = bPw;
+	}
+	public String getbTitle() {
+		return bTitle;
+	}
+	public void setbTitle(String bTitle) {
+		this.bTitle = bTitle;
 	}
 	public String getbContent() {
 		return bContent;

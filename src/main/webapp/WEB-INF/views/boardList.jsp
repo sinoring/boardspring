@@ -26,6 +26,7 @@
 				<td>${list.bNum }</td>
 				<td><a href="/board/${list.bNum}">${list.bTitle }</a></td>
 				<td>${list.bUser }</td>
+				<td>${list.bDate }</td>
 				<td>${list.bHit }</td>
 			</tr>
 		</c:forEach>
