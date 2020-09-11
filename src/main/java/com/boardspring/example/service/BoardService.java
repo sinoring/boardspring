@@ -6,4 +6,6 @@ import com.boardspring.example.domain.Board;
 
 public interface BoardService {
 	public List<Board> selectBoardList();
+	
+	
 }

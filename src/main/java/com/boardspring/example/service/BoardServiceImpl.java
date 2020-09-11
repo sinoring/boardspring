@@ -15,4 +15,6 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> selectBoardList(){
 		return boardmapper.selectBoardList();
 	};
+	
+	
 }
