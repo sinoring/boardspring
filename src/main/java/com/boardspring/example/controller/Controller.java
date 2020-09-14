@@ -3,6 +3,7 @@ package com.boardspring.example.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +15,12 @@ import com.boardspring.example.mapper.BoardMapper;
 import com.boardspring.example.service.BoardService;
 
 @org.springframework.stereotype.Controller
+@RequestMapping("/board")
+@ComponentScan(basePackageClasses=Controller.class)
 public class Controller {
 
 	@Autowired BoardService boardservice;
-	@RequestMapping("/")
+	
 	//게시글목록
 	public String home(Model model) {
 		
@@ -27,20 +30,21 @@ public class Controller {
 		return "/boardList";
 	}
 	
-	//게시글작성페이지 (get)
 	@RequestMapping(value="/post",method=RequestMethod.GET)
 	public ModelAndView writeForm() {
 		return new ModelAndView("boardWrite");
 	}
 	
-	//게시글작성페이지 (post)
 	@RequestMapping(value="/post",method=RequestMethod.POST)
-	public ModelAndView wirte(@ModelAttribute("Board") Board board) {
+	public ModelAndView write(@ModelAttribute("Board") Board board) {
+		boardservice.boardInsert(board);
 		
-		BoardMapper.insertBoard(board);
-		
-		return "/boardList";
+		return "redirect://localhost:8080/";
 	}
 	
 	
-}
+	
+	}
+	
+
+

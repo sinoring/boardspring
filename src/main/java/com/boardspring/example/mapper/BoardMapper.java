@@ -9,5 +9,5 @@ import com.boardspring.example.domain.Board;
 @Mapper
 public interface BoardMapper {
 	public List<Board> selectBoardList();
-	void insertBoard(Board board);
+	public void boardInsert(Board board);
 }

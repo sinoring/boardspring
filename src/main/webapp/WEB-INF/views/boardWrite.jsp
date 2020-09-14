@@ -24,8 +24,9 @@
 			</div>
 			<div>
 				<label>내용</label>
-				<textarea name="content"
+				<textarea name="content" class="from-control" rows="5"></textarea>
 			</div>
+			<button type="submit" class="btn btn-default">작성</button>
 		</form>
 	</div> 
 </body>

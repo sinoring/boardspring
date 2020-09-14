@@ -12,4 +12,9 @@
 				bHit
 		FROM	board 
 	</select>
+	<insert id="boardInsert">
+		INSERT INTO board (bNum, bTitle, bContent, bId, bDate)
+			values
+		(#{bNum},#{title},#{content},#{id},#{bDate},0)
+	</insert>
 </mapper>
