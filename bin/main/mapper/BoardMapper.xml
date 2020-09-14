@@ -13,8 +13,14 @@
 		FROM	board 
 	</select>
 	<insert id="boardInsert" parameterType="com.boardspring.example.domain.Board">
-		INSERT INTO board (bNum, bTitle, bContent, bId, bDate)
-			values
-		(#{bNum},#{title},#{content},#{id},#{bDate},0)
+		INSERT INTO board (bNum, bTitle, bContent, bUser)
+		values
+		(#{bNum},#{bTitle},#{bContent},#{bUser},0)
 	</insert>
+	<select id="boardView" parameterType="int" resultType="com.boardspring.example.domain.Board">
+		SELECT * FROM board where bNum = #{bNum}
+	</select>
+	<update id="updateHit" parameterType="int">
+		UPDATE board set bHit = bHit+1 where bNum = #{bNum}
+	</update>
 </mapper>

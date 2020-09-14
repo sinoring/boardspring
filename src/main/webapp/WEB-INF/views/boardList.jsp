@@ -12,7 +12,7 @@
 </head>
 <body>
 	<h2>게시글목록</h2>
-	<button class="btn btn-primary" style="float : right;" onclick="location.href='/board/post'">작성</button>
+	<button class="btn btn-primary" style="float : right;" onclick="location.href='/boardWrite'">작성</button>
 	<table class="table">
 		<tr>
 			<th>No</th>

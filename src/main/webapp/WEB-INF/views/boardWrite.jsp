@@ -13,18 +13,18 @@
 <body>
 	<h3> 게시글 작성</h3>
 	<div style="padding : 30px;">
-		<form method="POST" action="/post">
+		<form method="POST" action="/boardWrite">
 			<div class="form-group">
 				<label>제목</label>
-				<input type="text" name="title" class="from-control">
+				<input type="text" name="bNum" class="from-control">
 			</div>
 			<div class="form-group">
 				<label>작성자</label>
-				<input type="text" name="writer" class="from-control">
+				<input type="text" name="bUser" class="from-control">
 			</div>
 			<div>
 				<label>내용</label>
-				<textarea name="content" class="from-control" rows="5"></textarea>
+				<textarea name="bContent" class="from-control" rows="5"></textarea>
 			</div>
 			<button type="submit" class="btn btn-default">작성</button>
 		</form>
