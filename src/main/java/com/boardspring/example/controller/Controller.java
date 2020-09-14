@@ -22,12 +22,17 @@ public class Controller {
 	@Autowired BoardService boardservice;
 	
 	//게시글목록
-	public String home(Model model) {
-		
+//	public String home(Model model) {
+//		
+//		List<Board> list = boardservice.selectBoardList();
+//		model.addAttribute("list", list);
+//		
+//		return "/boardList";
+//	}
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView list() {
 		List<Board> list = boardservice.selectBoardList();
-		model.addAttribute("list", list);
-		
-		return "/boardList";
+		return new ModelAndView("boardList","list",list);
 	}
 	
 	@RequestMapping(value="/post",method=RequestMethod.GET)
@@ -35,11 +40,11 @@ public class Controller {
 		return new ModelAndView("boardWrite");
 	}
 	
-	@RequestMapping(value="/post",method=RequestMethod.POST)
-	public ModelAndView write(@ModelAttribute("Board") Board board) {
-		boardservice.boardInsert(board);
+//	@RequestMapping(value="/post",method=RequestMethod.POST)
+	public String write(Model model) {
+		boardservice.boardInsert();
 		
-		return "redirect://localhost:8080/";
+		return "redirect://localhost:8080/board";
 	}
 	
 	

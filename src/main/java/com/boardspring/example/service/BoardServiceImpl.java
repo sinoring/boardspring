@@ -18,7 +18,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public void boardInsert() {
-		return boardmapper.boardInsert();
+		
 	}
 	
 	

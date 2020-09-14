@@ -12,7 +12,7 @@
 				bHit
 		FROM	board 
 	</select>
-	<insert id="boardInsert">
+	<insert id="boardInsert" parameterType="com.boardspring.example.domain.Board">
 		INSERT INTO board (bNum, bTitle, bContent, bId, bDate)
 			values
 		(#{bNum},#{title},#{content},#{id},#{bDate},0)
