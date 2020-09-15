@@ -13,7 +13,7 @@
 <body>
 	<h3> 게시글 작성</h3>
 	<div style="padding : 30px;">
-		<form method="POST" action="/boardWrite">
+		<form method="POST" action="/boardSave">
 			<div class="form-group">
 				<label>제목</label>
 				<input type="text" name="bNum" class="from-control">
