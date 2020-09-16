@@ -10,10 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.boardspring.example.domain.Board;
 import com.boardspring.example.service.BoardService;
+import com.boardspring.example.mapper.BoardMapper;
 
 @org.springframework.stereotype.Controller
 
@@ -38,18 +40,17 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/boardSave")
-	public String saveBoard() {
-		//boardservice.boardInsert(board);
-		//return "redirect:/";
-		return "/boardWrite";
+	public String saveBoard(Board board) {
+		boardservice.boardInsert(board);
+		return "redirect:/";
 	}
 	
-//	@RequestMapping(value="/#{bNum}", method=RequestMethod.GET)
-//	public String viewBoard(Model model, @Requestparam("bNum")int bNum) {
-//		model.addAttribute("boardView", boardservice.boardView(bNum));
-//		return "/boardView";
-//		
-//	}
+	@RequestMapping(value="/boardView")
+	public String boardView(Model model,@RequestParam("bNum")int bNum){
+		model.addAttribute("boardView",boardservice.boardView(bNum));
+		return "/boardView";
+	}
+
 	
 	
 	}

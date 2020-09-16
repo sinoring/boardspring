@@ -13,9 +13,9 @@
 		FROM	board 
 	</select>
 	<insert id="boardInsert" parameterType="com.boardspring.example.domain.Board">
-		INSERT INTO board (bTitle, bContent, bUser, bHit)
+		INSERT INTO board (bTitle, bId, bPw, bContent, bUser, bHit)
 		values
-		(#{bTitle},#{bContent},#{bUser},0)
+		(#{bTitle},#{bId},#{bPw},#{bContent},#{bUser},0)
 	</insert>
 	<select id="boardView" parameterType="int" resultType="com.boardspring.example.domain.Board">
 		SELECT * FROM board where bNum = #{bNum}

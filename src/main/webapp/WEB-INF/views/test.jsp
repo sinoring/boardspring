@@ -21,16 +21,6 @@
 			<th>작성날짜</th>
 			<th>조회수</th>
 		</tr>
-		<c:forEach var="list" items="${list }">
-			<tr>
-				<td>${list.bNum }</td>
-				<td><a href="/boardView?bNum=${list.bNum}">${list.bTitle }</a></td>
-				<td>${list.bUser }</td>
-				<td>${list.bDate }</td>
-				<td>${list.bHit }</td>
-			</tr>
-		</c:forEach>
 	</table>
-	
 </body>
 </html>

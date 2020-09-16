@@ -11,5 +11,4 @@ public interface BoardMapper {
 	public List<Board> selectBoardList();
 	public void boardInsert(Board board);
 	public Board boardView(int bNum);
-	public Board updateHit(int bNum);
 }

@@ -15,13 +15,17 @@
 <body>
     <h3>게시글 상세</h3>
     <div style="padding : 30px;">
+     <div class="form-group">
+    	<label>No</label>
+    	<span>${board.bNum}</span>
+     </div>
       <div class="form-group">
         <label>제목</label>
         <span>${board.bTitle}</span>
       </div>
       <div class="form-group">
         <label>작성자</label>
-        <span>${board.wUser}</span>
+        <span>${board.bUser}</span>
       </div>
       <div class="form-group">
         <label>작성날짜</label>
@@ -36,11 +40,12 @@
         <p>${board.bContent}</p>
       </div>
       <div class="form-group">
-          <input type="button" value="수정" onclick='location.href="/board/post/${board.bNum}"'>
-          <form:form action="/board/post/${board.bNum}" method="DELETE">
+          <input type="button" value="수정" onclick='location.href="/boardWrite/${board.bNum}"'>
+          <form:form action="/boardWrite/${board.bNum}" method="DELETE">
               <input type="submit" value="삭제">
-          </form:form>
+          </form:form>    
       </div>
     </div>
+    
 </body>
 </html>

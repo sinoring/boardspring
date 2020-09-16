@@ -23,9 +23,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public Board boardView(int bNum) {
-		boardmapper.updateHit(bNum);
 		return boardmapper.boardView(bNum);
 	}
-	
 	
 }
