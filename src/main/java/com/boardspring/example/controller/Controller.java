@@ -63,13 +63,13 @@ public class Controller {
 	@GetMapping(value="/boardModify")
 	public String boardModify(@RequestParam("bNum")int bNum, Model model) {
 		model.addAttribute("board", boardservice.boardView(bNum));
-		return "/boardModify?bNum="; 
+		return "/boardModify"; 
 	}
 	
 	@PostMapping(value="/boardModify")
 	public String boardModify(Board board) {
 		boardservice.boardModify(board);
-		return "redirect:/boardView?bNum=" + board.getbNum();
+		return "redirect:/";
 	}
 }
 

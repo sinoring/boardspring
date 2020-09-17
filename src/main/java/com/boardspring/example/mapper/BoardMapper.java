@@ -12,5 +12,5 @@ public interface BoardMapper {
 	public void boardInsert(Board board);
 	public Board boardView(int bNum);
 	public boolean boardDel(int bNum);
-	public boolean boardmodify(Board board);
+	public void boardModify(Board board);
 }

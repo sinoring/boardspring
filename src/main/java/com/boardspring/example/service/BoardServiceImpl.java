@@ -32,9 +32,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public boolean boardModify(Board board) {
-		boardmapper.boardmodify(board);
-		return boardmapper.boardmodify(board);
+	public void boardModify(Board board) {
+		boardmapper.boardModify(board);
 	}
 	
 }

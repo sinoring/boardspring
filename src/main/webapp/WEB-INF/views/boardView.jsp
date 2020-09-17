@@ -19,7 +19,7 @@
     <div>board_date :</div>
     <div>${boardView.bDate}</div>
     <div style= "float:right;">
-        <input type="button" value="수정" onclick="location.href='modify?bNum=${boardView.bNum}'">
+        <input type="button" value="수정" onclick="location.href='boardModify?bNum=${boardView.bNum}'">
         <input type="button" value="삭제" onclick="del(${boardView.bNum})">
     </div>
     
