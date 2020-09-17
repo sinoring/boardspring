@@ -23,8 +23,18 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public Board boardView(int bNum) {
-		boardmapper.updateHit(bNum);
 		return boardmapper.boardView(bNum);
+	}
+	
+	@Override
+	public boolean boardDel(int bNum) {
+		return boardmapper.boardDel(bNum);
+	}
+	
+	@Override
+	public boolean boardModify(Board board) {
+		boardmapper.boardmodify(board);
+		return boardmapper.boardmodify(board);
 	}
 	
 }

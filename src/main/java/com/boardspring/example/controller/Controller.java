@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,12 +50,27 @@ public class Controller {
 	@RequestMapping(value="/boardView")
 	public String boardView(Model model,@RequestParam("bNum")int bNum){
 		model.addAttribute("boardView",boardservice.boardView(bNum));
+		//jsp에 boardView. 형식으로 지정
 		return "/boardView";
 	}
-
 	
-	
+	@RequestMapping(value="/boardDel")
+	public String boardDel(@RequestParam("bNum")int bNum) {
+		boardservice.boardDel(bNum);
+		return "redirect:/";
 	}
 	
+	@GetMapping(value="/boardModify")
+	public String boardModify(@RequestParam("bNum")int bNum, Model model) {
+		model.addAttribute("board", boardservice.boardView(bNum));
+		return "/boardModify?bNum="; 
+	}
+	
+	@PostMapping(value="/boardModify")
+	public String boardModify(Board board) {
+		boardservice.boardModify(board);
+		return "redirect:/boardView?bNum=" + board.getbNum();
+	}
+}
 
 

@@ -11,6 +11,7 @@
 				bDate,
 				bHit
 		FROM	board 
+		ORDER BY bNum DESC
 	</select>
 	<insert id="boardInsert" parameterType="com.boardspring.example.domain.Board">
 		INSERT INTO board (bTitle, bId, bPw, bContent, bUser, bHit)
@@ -22,5 +23,11 @@
 	</select>
 	<update id="updateHit" parameterType="int">
 		UPDATE board set bHit = bHit+1 where bNum = #{bNum}
+	</update>
+	<delete id="boardDel" parameterType="int">
+		DELETE FROM board where bNum = #{bNum}
+	</delete>
+	<update id="boardModify" parameterType="com.boardspring.example.domain.Board">
+		UPDATE board set TITLE = #{bTitle}, CONTENT = #{bContent} where bNum #{bNum}
 	</update>
 </mapper>

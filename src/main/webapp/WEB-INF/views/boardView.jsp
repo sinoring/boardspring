@@ -1,51 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-<meta http-equiv="Content-Type" content= "text/html; charset=UTF-8">
-<!-- BootStrap CDN -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<title>ê²Œì‹œê¸€ ìƒì„¸</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>boardView</title>
 </head>
 <body>
-    <h3>ê²Œì‹œê¸€ ìƒì„¸</h3>
-    <div style="padding : 30px;">
-     <div class="form-group">
-    	<label>No</label>
-    	<span>${board.bNum}</span>
-     </div>
-      <div class="form-group">
-        <label>ì œëª©</label>
-        <span>${board.bTitle}</span>
-      </div>
-      <div class="form-group">
-        <label>ì‘ì„±ì</label>
-        <span>${board.bUser}</span>
-      </div>
-      <div class="form-group">
-        <label>ì‘ì„±ë‚ ì§œ</label>
-        <span><fmt:formatDate value="${board.bDate}" pattern="yyyy/ MM/ dd HH:mm" /></span>
-      </div>
-      <div class="form-group">
-        <label>ì¡°íšŒìˆ˜</label>
-        <span>${board.bHit}</span>
-      </div>
-      <div class="form-group">
-        <label>ë‚´ìš©</label>
-        <p>${board.bContent}</p>
-      </div>
-      <div class="form-group">
-          <input type="button" value="ìˆ˜ì •" onclick='location.href="/boardWrite/${board.bNum}"'>
-          <form:form action="/boardWrite/${board.bNum}" method="DELETE">
-              <input type="submit" value="ì‚­ì œ">
-          </form:form>    
-      </div>
+<h1>BOARD VIEW</h1>
+    <div>board_no :</div>
+    <div>${boardView.bNum}</div>
+    <div>board_title :</div>
+    <div>${boardView.bTitle}</div>
+    <div>board_content :</div>
+    <div>${boardView.bContent}</div>
+    <div>board_user :</div>
+    <div>${boardView.bUser}</div>
+    <div>board_date :</div>
+    <div>${boardView.bDate}</div>
+    <div style= "float:right;">
+        <input type="button" value="¼öÁ¤" onclick="location.href='modify?bNum=${boardView.bNum}'">
+        <input type="button" value="»èÁ¦" onclick="del(${boardView.bNum})">
     </div>
     
+<script>
+	function del(bNum){
+		var chk = confirm("Á¤¸» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?");
+		if(chk){
+			location.href='boardDel?bNum='+bNum;
+			}
+		}
+
+</script>
 </body>
 </html>
