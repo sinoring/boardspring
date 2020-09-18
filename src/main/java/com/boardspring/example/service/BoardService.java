@@ -8,6 +8,7 @@ public interface BoardService {
 	public List<Board> selectBoardList();
 	public void boardInsert(Board board);
 	public Board boardView(int bNum);
+	public boolean updateHit(int bNum);
 	public boolean boardDel(int bNum);
 	public void boardModify(Board board);
 }

@@ -51,6 +51,7 @@ public class Controller {
 	public String boardView(Model model,@RequestParam("bNum")int bNum){
 		model.addAttribute("boardView",boardservice.boardView(bNum));
 		//jsp에 boardView. 형식으로 지정
+		boardservice.updateHit(bNum);
 		return "/boardView";
 	}
 	
@@ -66,11 +67,19 @@ public class Controller {
 		return "/boardModify"; 
 	}
 	
-	@PostMapping(value="/boardModify")
+	@PostMapping(value="/boardModify2")
 	public String boardModify(Board board) {
 		boardservice.boardModify(board);
-		return "redirect:/";
+		return "/boardModify";
+		//return "redirect:/";
 	}
+	
+	@RequestMapping("/boardMod")
+	public String boardMod(Board board) {
+		return "/ttt";
+	}
+	
+
 }
 
 

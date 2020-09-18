@@ -13,4 +13,5 @@ public interface BoardMapper {
 	public Board boardView(int bNum);
 	public boolean boardDel(int bNum);
 	public void boardModify(Board board);
+	public boolean updateHit(int bNum);
 }
