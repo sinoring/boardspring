@@ -22,7 +22,6 @@
         <input type="button" value="수정" onclick="location.href='boardModify?bNum=${boardView.bNum}'">
         <input type="button" value="삭제" onclick="del(${boardView.bNum})">
     </div>
-    
 <script>
 	function del(bNum){
 		var chk = confirm("정말 삭제하시겠습니까?");

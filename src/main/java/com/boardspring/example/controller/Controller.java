@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.boardspring.example.domain.Board;
+import com.boardspring.example.domain.User;
 import com.boardspring.example.service.BoardService;
 import com.boardspring.example.mapper.BoardMapper;
 
@@ -77,6 +78,16 @@ public class Controller {
 	@RequestMapping("/boardMod")
 	public String boardMod(Board board) {
 		return "redirect:/";
+	}
+
+	@RequestMapping("/beforeSignUp")
+	public String beforeSignUp() {
+		return "/signup";
+	}
+	
+	@RequestMapping("/signup")
+	public String signup(User user) {
+		return "/login";
 	}
 	
 
