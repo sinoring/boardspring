@@ -18,6 +18,7 @@
 	            </div>
 	            <div>
 	                <form class="form-group" name="frm-modify" action="/boardMod" method="post">
+	                <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}">
 		                <table class="table table-striped row">
 		                    <tr>
 		                        <th class="col-md-2">작성자</th>

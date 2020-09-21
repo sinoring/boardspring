@@ -67,16 +67,16 @@ public class Controller {
 		return "/boardModify"; 
 	}
 	
-	@PostMapping(value="/boardModify2")
-	public String boardModify(Board board) {
-		boardservice.boardModify(board);
-		return "/boardModify";
-		//return "redirect:/";
-	}
+//	@PostMapping(value="/boardModify2")
+//	public String boardModify(Board board) {
+//		boardservice.boardModify(board);
+//		return "/boardModify";
+//		//return "redirect:/";
+//	}
 	
 	@RequestMapping("/boardMod")
 	public String boardMod(Board board) {
-		return "/ttt";
+		return "redirect:/";
 	}
 	
 
