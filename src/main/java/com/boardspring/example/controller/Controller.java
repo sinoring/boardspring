@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.boardspring.example.domain.Board;
 import com.boardspring.example.domain.User;
 import com.boardspring.example.service.BoardService;
+import com.boardspring.example.service.UserService;
 import com.boardspring.example.mapper.BoardMapper;
 
 @org.springframework.stereotype.Controller
@@ -25,6 +28,7 @@ import com.boardspring.example.mapper.BoardMapper;
 public class Controller {
 
 	@Autowired BoardService boardservice;
+	@Autowired UserService userservice;
 	
 //	게시글목록
 	@RequestMapping("/")
@@ -87,6 +91,20 @@ public class Controller {
 	
 	@RequestMapping("/signup")
 	public String signup(User user) {
+		//비밀번호 암호화
+		String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+		
+		user.setPassword(encodedPassword);
+		user.setAccountNonExpired(true);
+		user.setEnabled(true);
+		user.setAccountNonLocked(true);
+		user.setCredentialsNonExpired(true);
+		user.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_USER"));
+		
+		//유저생성
+		userservice.createUser(user);
+		userservice.createAuthorities(user);
+		
 		return "/login";
 	}
 	

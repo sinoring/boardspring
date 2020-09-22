@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 public class User implements UserDetails{
 	private static final long serialVersionUID = 1L;
 	
@@ -14,12 +13,12 @@ public class User implements UserDetails{
 	private String uName;
 	private String uDateTime;
 	
-	private Collection<? extends GrantedAuthority> autorities;
+	private Collection<? extends GrantedAuthority> authorities;
 	
 	private boolean isAccountNonExpired;
 	private boolean isAccountNonLocked;
 	private boolean isCredentialsNonExpired;
-	private boolean isEnalbed;
+	private boolean isEnabled;
 	
 	public String getuName() {
 		return uName;
@@ -49,22 +48,18 @@ public class User implements UserDetails{
 	public void setCredentialsNonExpired(boolean isCredentialsNonExpired) {
 		this.isCredentialsNonExpired = isCredentialsNonExpired;
 	}
-	public void setEnalbed(boolean isEnalbed) {
-		this.isEnalbed = isEnalbed;
+	public void setEnabled(boolean isEnalbed) {
+		this.isEnabled = isEnalbed;
 	}
 	
-	public void setAutorities(Collection<? extends GrantedAuthority> autorities) {
-		this.autorities = autorities;
-	}
-
-	public Collection<? extends GrantedAuthority> getAutorities() {
-		return autorities;
+	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+		this.authorities = authorities;
 	}
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return autorities;
+		return authorities;
 	}
 	@Override
 	public String getPassword() {
@@ -94,7 +89,7 @@ public class User implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return isEnalbed;
+		return isEnabled;
 	}
 	
 }
