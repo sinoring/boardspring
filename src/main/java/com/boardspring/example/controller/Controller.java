@@ -108,7 +108,10 @@ public class Controller {
 		return "/login";
 	}
 	
-
+	@RequestMapping(value="/login")
+	public String beforeLogin(Model model) {
+		return "/login";
+	}
 }
 
 

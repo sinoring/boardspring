@@ -12,12 +12,12 @@ repositories {
 	mavenCentral()
 }
 
-configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
-}
+//configurations {
+	//developmentOnly
+	//runtimeClasspath {
+	//	extendsFrom developmentOnly
+	//}
+//}
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -30,13 +30,13 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	//testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 	
 	compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:1.1.1" 
 	compile('org.apache.tomcat.embed:tomcat-embed-jasper')
 	compile('javax.servlet:jstl:1.2')
 	
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	//developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 test {

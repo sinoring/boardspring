@@ -56,7 +56,7 @@ input {
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<input type="text" placeholder="아이디" name="username" required style="height:30px; width: 380px"/><br>
 		<input type="password" placeholder="비밀번호" name="password" required style="height:30px; width: 380px"/><br>
-		<input id = "remember_me" name="remember-me" type="checkbox"/>아이디 기억하기
+		<input id = "remember_me" name="remember-me" type="checkbox"/>아이디 기억하기<br>
 		<input type="submit" value="로그인" class="login"/>
 	</form>
 	<p><a href="/signup"><input type="button" value="회원가입"></a></p>
