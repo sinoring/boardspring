@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,19 +48,19 @@ input {
 
 	<c:if test="${ loginResult == -1 || loginResult == 0 }">
 		<script>
-			alert("���̵� Ȥ�� ��й�ȣ�� Ʋ�Ƚ��ϴ�.");
+			alert("아이디 혹은 비밀번호가 틀렸습니다.");
 		</script>
 	</c:if>
 	<div>
-	<h5>�α��� ������</h5>
-	<form action="/login" method="post">
+	<h5>로그인 페이지</h5>
+	<form action="/loginPro" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-		<input type="text" placeholder="���̵�" name="username" required style="height:30px; width: 380px"/><br>
-		<input type="password" placeholder="��й�ȣ" name="password" required style="height:30px; width: 380px"/><br>
-		<input id = "remember_me" name="remember-me" type="checkbox"/>���̵� ����ϱ�<br>
-		<input type="submit" value="�α���" class="login"/>
+		<input type="text" placeholder="아이디" name="username" required style="height:30px; width: 380px"/><br>
+		<input type="password" placeholder="비밀번호" name="password" required style="height:30px; width: 380px"/><br>
+		<input id = "remember_me" name="remember-me" type="checkbox"/>아이디 기억하기<br>
+		<input type="submit" value="로그인" class="login"/>
 	</form>
-	<p><a href="/signup"><input type="button" value="ȸ������"></a></p>
+	<p><a href="/signup"><input type="button" value="회원가입"></a></p>
 	
 	</div>
 </body>

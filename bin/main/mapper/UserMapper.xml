@@ -12,7 +12,7 @@
 	
 	<!--  회원 불러오기 -->
 	<select id="readUser" parameterType="String" resultType="User">
-		SELECT	uId 							as 		username,
+		SELECT		uId 						as 		username,
 					uPassword					as 		password,
 					uName						as		uName,
 					u_isAccountNonExpired		as		isAccountNonExpired,
@@ -51,7 +51,7 @@
 			u_id,
 			u_auth
 		) VALUES
-		<foreach item="authority" index="index" collection="authorities" separator=",">
+		<foreach item="authority" index="boardList" collection="authorities" separator=",">
 			(#{username}, #{authority.role})
 		</foreach>
 		ON DUPLICATE KEY
