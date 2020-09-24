@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails{
 	private static final long serialVersionUID = 1L;
 	
+	private String u_id;
 	private String username;
 	private String password;
 	private String uName;
@@ -20,6 +21,12 @@ public class User implements UserDetails{
 	private boolean isCredentialsNonExpired;
 	private boolean isEnabled;
 	
+	public String getU_id() {
+		return u_id;
+	}
+	public void setU_id(String u_id) {
+		this.u_id = u_id;
+	}
 	public String getuName() {
 		return uName;
 	}

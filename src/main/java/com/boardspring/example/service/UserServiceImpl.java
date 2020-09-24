@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
 	public Collection<GrantedAuthority> getAuthorities(String username) {
 		// TODO Auto-generated method stub
 		List<GrantedAuthority> authorities = userMapper.readAuthorities(username);
+		System.out.println(userMapper.readAuthorities(username));
 		return authorities;
 	}
 }

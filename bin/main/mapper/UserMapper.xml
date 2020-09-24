@@ -12,7 +12,7 @@
 	
 	<!--  회원 불러오기 -->
 	<select id="readUser" parameterType="String" resultType="User">
-		SELECT		uId 						as 		username,
+		SELECT		u_id 						as 		username,
 					uPassword					as 		password,
 					uName						as		uName,
 					u_isAccountNonExpired		as		isAccountNonExpired,
@@ -21,13 +21,13 @@
 					u_isEnabled					as		isEnabled
 		FROM	member
 		WHERE	1=1
-		AND		uId = #{username}
+		AND		u_id = #{username}
 	</select>
 	
 	<!-- 회원 등록 -->
 	<insert id="createUser" parameterType="User">
 		INSERT INTO member(
-			uId,
+			u_id,
 			uPassword,
 			uName,
 			u_isAccountNonExpired,
