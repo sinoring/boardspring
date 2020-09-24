@@ -2,11 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boardspring.example.mapper.CommentMapper">
 
-	<select id="CommentCount" resultType="int">
+	<select id="commentCount" resultType="int">
 		SELECT COUNT(*) FROM comment
 	</select>
-
 	
+	<select id="commentList" resultType="com.boardspring.example.domain.Comment">
+		SELECT * FROM comment 
+	</select>
+	
+	<insert id="commentInsert" parameterType="com.boardspring.example.domain.Comment">
+		INSERT INTO
+		comment(cNum, bNum, cContent, cUser, cDate)
+		VALUES(#{cNum}, #{bNum}, #{cContent}, #{cUser}, now())
+	</insert>
+	
+	<update id="commentModify" parameterType="com.boardspring.example.domain.Comment" >
+		UPDATE comment
+		SET
+		cContent = #{cContent}
+		WHERE CNum = #{cNum}
+	</update>
+	
+	<delete id="commentDelete" parameterType="int">
+		DELETE FROM comment WHERE cNum = #{cNum}
+	</delete>
 
 
 </mapper>

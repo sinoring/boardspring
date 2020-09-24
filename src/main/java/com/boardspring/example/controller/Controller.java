@@ -3,6 +3,7 @@ package com.boardspring.example.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.boardspring.example.domain.Board;
+import com.boardspring.example.domain.Comment;
 import com.boardspring.example.domain.User;
 import com.boardspring.example.service.BoardService;
+import com.boardspring.example.service.CommentService;
 import com.boardspring.example.service.UserService;
 import com.boardspring.example.mapper.BoardMapper;
 
@@ -29,6 +33,7 @@ public class Controller {
 
 	@Autowired BoardService boardservice;
 	@Autowired UserService userservice;
+	@Autowired CommentService commentservice;
 	
 //	게시글목록
 	@RequestMapping("/")
@@ -112,6 +117,43 @@ public class Controller {
 	public String beforeLogin(Model model) {
 		return "/login";
 	}
+	
+	
+	
+	@RequestMapping("/commentList")
+	@ResponseBody //비동기 처리
+	public List<Comment> commentList(Model model) throws Exception{
+		return commentservice.commentList();
+		
+	}
+	
+	@RequestMapping("/commentInsert")
+	@ResponseBody
+	public int commentInsert(@RequestParam int bNum, @RequestParam String cContent, @RequestParam String cUser )throws Exception{
+		Comment comment = new Comment();
+		comment.setbNum(bNum);
+		comment.setcContent(cContent);
+		comment.setcUser(cUser);
+		
+		return commentservice.commentInsert(comment);
+	}
+	
+	@RequestMapping("/commentModify")
+	@ResponseBody
+	public int commentModify(@RequestParam int cNum, @RequestParam String cContent) throws Exception{
+		Comment comment = new Comment();
+		comment.setcNum(cNum);
+		comment.setcContent(cContent);
+		
+		return commentservice.commentModify(comment);
+	}
+	
+	@RequestMapping("/commentDelete")
+	@ResponseBody
+	public int commentDelete(@RequestParam int cNum)
+	
+	
+	
 }
 
 
