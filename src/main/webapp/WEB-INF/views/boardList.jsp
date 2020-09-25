@@ -3,6 +3,17 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	Object principal = auth.getPrincipal();
+	
+	String name = "";
+	if(principal != null){
+		name = auth.getName();
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,14 +26,14 @@
 	<h2>게시글목록</h2>
 		<hr>
 		<div>
+		
 			<sec:authorize access="isAnonymous()">
 				<a href="/login">로그인</a>
 				<a href="/beforeSignUp">회원가입</a>
 			</sec:authorize>
 			<sec:authorize access="isAuthenticated()">
+				<h2><%=name %>님 반갑습니다.</h2>
 				<a href="/logout">로그아웃</a>
-				<sec:authentication property="principal" var="principal"/>
-				<h2>${principal }</h2>
 			</sec:authorize>
 		</div>
 		<div>

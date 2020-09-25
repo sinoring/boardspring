@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
@@ -118,6 +119,32 @@ public class Controller {
 		return "/login";
 	}
 	
+	@Secured({"ROLE_ADMIN"})
+	@RequestMapping(value="/admin")
+	public String admin(Model model) {
+		return "/admin";
+	}
+	
+	@Secured({"ROLE_USER"})
+	@RequestMapping(value="/user/info")
+	public String userInfo(Model model) {
+		return "/user_info";
+	}
+	
+	@RequestMapping(value="/denied")
+	public String denied(Model model) {
+		return "/denied";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	@RequestMapping("/commentList")
@@ -148,9 +175,14 @@ public class Controller {
 		return commentservice.commentModify(comment);
 	}
 	
-	@RequestMapping("/commentDelete")
+	@RequestMapping("/commentDelete/{cNum}")
 	@ResponseBody
-	public int commentDelete(@RequestParam int cNum)
+	public int commentDelete(@RequestParam int cNum) throws Exception{
+		Comment comment = new Comment();
+		comment.setcNum(cNum);
+		
+		return commentservice.commentDelete(cNum);
+	}
 	
 	
 	
