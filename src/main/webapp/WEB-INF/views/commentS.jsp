@@ -46,19 +46,19 @@ function commentInsert(insertData){
 		success : function(data){
 			if(data == 1){
 				commentList(); //댓글작성후 댓글목록 불러오기
-				$('[name=Content]').val('');
+				$('[name=cContent]').val('');
 				}
 			}
 		});
 }
 
 function commentUpdate(cNum){
-	var updateContent = $('[name=content_'+cNum+']').val();
+	var updateContent = $('[name=cContent_'+cNum+']').val();
 
 	$.ajax({
 		url : '/commentUpdate',
 		type : 'post',
-		data : {'Content' : updateContent, 'cNum' : cNum}
+		data : {'cContent' : updateContent, 'cNum' : cNum}
 		success : function(data){
 			if(data == 1) commentList(bNum); //댓글수정후 목록출력
 			}
