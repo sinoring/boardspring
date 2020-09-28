@@ -1,12 +1,18 @@
 package com.boardspring.example.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,6 +32,7 @@ import com.boardspring.example.domain.User;
 import com.boardspring.example.service.BoardService;
 import com.boardspring.example.service.CommentService;
 import com.boardspring.example.service.UserService;
+import com.mysql.cj.xdevapi.JsonArray;
 import com.boardspring.example.mapper.BoardMapper;
 
 @org.springframework.stereotype.Controller
@@ -137,52 +144,96 @@ public class Controller {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@RequestMapping("/commentList")
-	@ResponseBody //비동기 처리
-	public List<Comment> commentList(Model model) throws Exception{
-		return commentservice.commentList();
-		
-	}
-	
-	@RequestMapping("/commentInsert")
+	@RequestMapping(value="/commentInsert")
 	@ResponseBody
-	public int commentInsert(@RequestParam int bNum, @RequestParam String cContent, @RequestParam String cUser )throws Exception{
-		Comment comment = new Comment();
-		comment.setbNum(bNum);
-		comment.setcContent(cContent);
-		comment.setcUser(cUser);
+	public String ajax_addComment(@ModelAttribute("Comment") Comment comment, HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
 		
-		return commentservice.commentInsert(comment);
+		try {
+			comment.setcUser(user.getU_id());
+			commentservice.commentInsert(comment);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "success";
 	}
 	
-	@RequestMapping("/commentModify")
+	
+	@RequestMapping(value="/commentList", produces="application/json; charset=utf-8")
 	@ResponseBody
-	public int commentModify(@RequestParam int cNum, @RequestParam String cContent) throws Exception{
-		Comment comment = new Comment();
-		comment.setcNum(cNum);
-		comment.setcContent(cContent);
+	public ResponseEntity ajax_commentList(@ModelAttribute("Board")Board board, HttpServletRequest request) throws Exception{
+		HttpHeaders responseHeaders = new HttpHeaders();
+		ArrayList<HashMap> hmlist = new ArrayList<HashMap>();
 		
-		return commentservice.commentModify(comment);
+		List<Comment> comment = commentservice.commentList();
+		
+		if(comment.size() > 0) {
+			for(int i=0; i<comment.size(); i++) {
+				HashMap hm = new HashMap();
+				hm.put("cNum", comment.get(i).getcNum());
+				hm.put("cContent", comment.get(i).getcContent());
+				hm.put("cUser", comment.get(i).getcUser());
+				
+				hmlist.add(hm);
+			}
+		}
+		
+		JSONArray json = new JSONArray(hmlist);
+		return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
+		
 	}
 	
-	@RequestMapping("/commentDelete/{cNum}")
-	@ResponseBody
-	public int commentDelete(@RequestParam int cNum) throws Exception{
-		Comment comment = new Comment();
-		comment.setcNum(cNum);
-		
-		return commentservice.commentDelete(cNum);
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+//	@RequestMapping("/commentList")
+//	@ResponseBody //비동기 처리
+//	public List<Comment> commentList(Model model) throws Exception{
+//		return commentservice.commentList();
+//		
+//	}
+//	
+//	@RequestMapping("/commentInsert")
+//	@ResponseBody
+//	public int commentInsert(@RequestParam int bNum, @RequestParam String cContent, @RequestParam String cUser )throws Exception{
+//		Comment comment = new Comment();
+//		comment.setbNum(bNum);
+//		comment.setcContent(cContent);
+//		comment.setcUser(cUser);
+//		
+//		return commentservice.commentInsert(comment);
+//	}
+//	
+//	@RequestMapping("/commentModify")
+//	@ResponseBody
+//	public int commentModify(@RequestParam int cNum, @RequestParam String cContent) throws Exception{
+//		Comment comment = new Comment();
+//		comment.setcNum(cNum);
+//		comment.setcContent(cContent);
+//		
+//		return commentservice.commentModify(comment);
+//	}
+//	
+//	@RequestMapping("/commentDelete/{cNum}")
+//	@ResponseBody
+//	public int commentDelete(@RequestParam int cNum) throws Exception{
+//		Comment comment = new Comment();
+//		comment.setcNum(cNum);
+//		
+//		return commentservice.commentDelete(cNum);
+//	}
 	
 	
 	
