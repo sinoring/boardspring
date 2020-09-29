@@ -3,11 +3,14 @@ package com.boardspring.example.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpHeaders;
@@ -34,25 +37,47 @@ import com.boardspring.example.service.CommentService;
 import com.boardspring.example.service.UserService;
 import com.mysql.cj.xdevapi.JsonArray;
 import com.boardspring.example.mapper.BoardMapper;
+import com.boardspring.example.paging.Criteria;
+import com.boardspring.example.paging.PageMaker;
 
 @org.springframework.stereotype.Controller
 
 public class Controller {
 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired BoardService boardservice;
 	@Autowired UserService userservice;
 	@Autowired CommentService commentservice;
 	
+//	@RequestMapping("/")
+//	public String home(Model model) {
+//		List<Board> list = boardservice.selectBoardList();
+//		model.addAttribute("list" , list);
+//		logger.debug("debug");
+//		logger.info("info");
+//		logger.error("error");
+//		return "/boardList";
+//		
+//	}
+	
 //	게시글목록
 	@RequestMapping("/")
-	public String home(Model model) {
+	public String home(@ModelAttribute("criteria") Criteria cri, Model model) {
+		PageMaker pagemaker = new PageMaker();
+		pagemaker.setCri(cri);
+		pagemaker.setTotalCount(100);
 		
-		List<Board> list = boardservice.selectBoardList();
+		List<Board> list = boardservice.selectBoardList(cri);
 		model.addAttribute("list", list);
+		model.addAttribute("pagemaker", pagemaker);
+		
+		pagemaker.setTotalCount(boardservice.countBoardListTotal());
 		
 		return "/boardList";
 	}
 
+	 
+	
 	
 	@RequestMapping(value="/boardWrite")
 	public String writeBoard() {
@@ -161,29 +186,6 @@ public class Controller {
 	}
 	
 	
-	@RequestMapping(value="/commentList", produces="application/json; charset=utf-8")
-	@ResponseBody
-	public ResponseEntity ajax_commentList(@ModelAttribute("Board")Board board, HttpServletRequest request) throws Exception{
-		HttpHeaders responseHeaders = new HttpHeaders();
-		ArrayList<HashMap> hmlist = new ArrayList<HashMap>();
-		
-		List<Comment> comment = commentservice.commentList();
-		
-		if(comment.size() > 0) {
-			for(int i=0; i<comment.size(); i++) {
-				HashMap hm = new HashMap();
-				hm.put("cNum", comment.get(i).getcNum());
-				hm.put("cContent", comment.get(i).getcContent());
-				hm.put("cUser", comment.get(i).getcUser());
-				
-				hmlist.add(hm);
-			}
-		}
-		
-		JSONArray json = new JSONArray(hmlist);
-		return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
-		
-	}
 	
 	
 	
@@ -196,6 +198,33 @@ public class Controller {
 	
 	
 	
+	
+	
+	
+	
+//	@RequestMapping(value="/commentList", produces="application/json; charset=utf-8")
+//	@ResponseBody
+//	public ResponseEntity ajax_commentList(@ModelAttribute("Board")Board board, HttpServletRequest request) throws Exception{
+//		HttpHeaders responseHeaders = new HttpHeaders();
+//		ArrayList<HashMap> hmlist = new ArrayList<HashMap>();
+//		
+//		List<Comment> comment = commentservice.commentList();
+//		
+//		if(comment.size() > 0) {
+//			for(int i=0; i<comment.size(); i++) {
+//				HashMap hm = new HashMap();
+//				hm.put("cNum", comment.get(i).getcNum());
+//				hm.put("cContent", comment.get(i).getcContent());
+//				hm.put("cUser", comment.get(i).getcUser());
+//				
+//				hmlist.add(hm);
+//			}
+//		}
+//		
+//		JSONArray json = new JSONArray(hmlist);
+//		return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
+//		
+//	}
 	
 
 //	@RequestMapping("/commentList")

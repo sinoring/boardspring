@@ -61,6 +61,24 @@
 				</tr>
 			</c:forEach>
 		</table>
-	
+		<ul class="btn-group pagination">
+			<c:if test="${pagemaker.prev }">
+			<li>
+				<a href='<c:url value="/boardList?page=${pageMaker.startPage-1 }"/>'><i class="fa fa-chevron-left"></i></a>
+			</li>
+			</c:if>
+			<c:forEach begin="${pagemaker.startPage }" end="${pagemaker.endPage }" var="pageNum">
+			<li>
+				<a href='<c:url value="/boardList?page=${pageNum }"/>'><i class="fa">${pageNum }</i></a>
+			</li>
+			</c:forEach>
+			<c:if test="${pagemaker.next && pagemaker.endPage > 0 }">
+			<li>
+				<a href='<c:url value="/boardList?page=${pagemaker.endPage+1 }"/>'><i class="fa fa-chevron-right"></i></a>
+			</li>
+			</c:if>
+			
+			
+		</ul>
 </body>
 </html>

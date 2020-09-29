@@ -12,6 +12,16 @@
 				bHit
 		FROM	board 
 		ORDER BY bNum DESC
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	<select id="countBoardList" resultType="Integer">
+		<![CDATA[
+			SELECT
+				count(*)
+			FROM
+				board
+		]]>
+	
 	</select>
 	<insert id="boardInsert" parameterType="com.boardspring.example.domain.Board">
 		INSERT INTO board (bTitle, bId, bPw, bContent, bUser, bHit)

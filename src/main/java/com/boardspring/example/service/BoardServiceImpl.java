@@ -6,15 +6,21 @@ import org.springframework.stereotype.Service;
 
 import com.boardspring.example.domain.Board;
 import com.boardspring.example.mapper.BoardMapper;
+import com.boardspring.example.paging.Criteria;
 
 @Service("BoardServiceImpl")
 public class BoardServiceImpl implements BoardService {
 	
 	@Autowired BoardMapper boardmapper;
 	@Override
-	public List<Board> selectBoardList(){
+	public List<Board> selectBoardList(Criteria cri){
 		return boardmapper.selectBoardList();
 	};
+	
+	@Override
+	public int countBoardListTotal() {
+		return boardmapper.countBoardList();
+	}
 	
 	@Override
 	public void boardInsert(Board board){
