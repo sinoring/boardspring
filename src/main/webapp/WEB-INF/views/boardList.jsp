@@ -62,19 +62,19 @@
 			</c:forEach>
 		</table>
 		<ul class="btn-group pagination">
-			<c:if test="${pagemaker.prev }">
+			<c:if test="${paging.prev }">
 			<li>
-				<a href='<c:url value="/boardList?page=${pageMaker.startPage-1 }"/>'><i class="fa fa-chevron-left"></i></a>
+				<a href='<c:url value="/boardList?page=${paging.startPage-1 }"/>'>이전</a>
 			</li>
 			</c:if>
-			<c:forEach begin="${pagemaker.startPage }" end="${pagemaker.endPage }" var="pageNum">
+			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="pageNum">
 			<li>
-				<a href='<c:url value="/boardList?page=${pageNum }"/>'><i class="fa">${pageNum }</i></a>
+				<a href='<c:url value="/boardList?page=${pageNum }"/>'>${pageNum }</a>
 			</li>
 			</c:forEach>
-			<c:if test="${pagemaker.next && pagemaker.endPage > 0 }">
+			<c:if test="${paging.next && paging.endPage > 0 }">
 			<li>
-				<a href='<c:url value="/boardList?page=${pagemaker.endPage+1 }"/>'><i class="fa fa-chevron-right"></i></a>
+				<a href='<c:url value="/boardList?page=${paging.endPage+1 }"/>'>다음</a>
 			</li>
 			</c:if>
 			

@@ -62,23 +62,25 @@ public class Controller {
 	
 //	게시글목록
 	@RequestMapping("/")
-	public String home(@ModelAttribute("criteria") Criteria cri, Model model) {
-		PageMaker pagemaker = new PageMaker();
-		pagemaker.setCri(cri);
-		pagemaker.setTotalCount(100);
+	public String home(Criteria cri, Model model) {
+		
+//		List<Board> list = boardservice.selectBoardList(cri);
+//		model.addAttribute("list", list);
+		
+		int boardListCnt = boardservice.boardListCnt();
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(cri);
+		pageMaker.setTotalCount(boardListCnt);
 		
 		List<Board> list = boardservice.selectBoardList(cri);
-		model.addAttribute("list", list);
-		model.addAttribute("pagemaker", pagemaker);
 		
-		pagemaker.setTotalCount(boardservice.countBoardListTotal());
+		model.addAttribute("list",list);
+		model.addAttribute("paging", pageMaker);
 		
 		return "/boardList";
 	}
 
-	 
-	
-	
 	@RequestMapping(value="/boardWrite")
 	public String writeBoard() {
 		return "/boardWrite";

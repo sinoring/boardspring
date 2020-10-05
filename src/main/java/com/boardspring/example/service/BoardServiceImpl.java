@@ -18,9 +18,15 @@ public class BoardServiceImpl implements BoardService {
 	};
 	
 	@Override
-	public int countBoardListTotal() {
-		return boardmapper.countBoardList();
+	public int boardListCnt() {
+		return boardmapper.boardListCnt();
 	}
+	
+	
+//	@Override
+//	public int countBoardListTotal() {
+//		return boardmapper.countBoardList();
+//	}
 	
 	@Override
 	public void boardInsert(Board board){
