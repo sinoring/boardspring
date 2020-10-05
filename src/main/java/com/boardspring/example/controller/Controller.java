@@ -188,22 +188,6 @@ public class Controller {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 //	@RequestMapping(value="/commentList", produces="application/json; charset=utf-8")
 //	@ResponseBody
 //	public ResponseEntity ajax_commentList(@ModelAttribute("Board")Board board, HttpServletRequest request) throws Exception{

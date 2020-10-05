@@ -15,7 +15,4 @@ public interface BoardMapper {
 	public boolean boardDel(int bNum);
 	public void boardModify(Board board);
 	public boolean updateHit(int bNum);
-//	public int countBoardList() {
-//		return (Integer) selectOne("Board.countBoardList");
-//	}
 }
