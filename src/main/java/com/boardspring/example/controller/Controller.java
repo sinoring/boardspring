@@ -38,7 +38,6 @@ import com.boardspring.example.service.UserService;
 import com.mysql.cj.xdevapi.JsonArray;
 import com.boardspring.example.mapper.BoardMapper;
 import com.boardspring.example.paging.Criteria;
-import com.boardspring.example.paging.PageMaker;
 
 @org.springframework.stereotype.Controller
 
@@ -69,14 +68,18 @@ public class Controller {
 		
 		int boardListCnt = boardservice.boardListCnt();
 		
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCriteria(cri);
-		pageMaker.setTotalCount(boardListCnt);
+//		PageMaker pageMaker = new PageMaker();
+//		pageMaker.setCriteria(cri);
+//		pageMaker.setTotalCount(boardListCnt);
+		
+		Criteria criteria = new Criteria();
+		criteria.setCriteria(cri);
+		criteria.setTotalCount(boardListCnt);
 		
 		List<Board> list = boardservice.selectBoardList(cri);
 		
 		model.addAttribute("list",list);
-		model.addAttribute("paging", pageMaker);
+		model.addAttribute("paging", cri);
 		
 		return "/boardList";
 	}
