@@ -61,25 +61,18 @@ public class Controller {
 	
 //	게시글목록
 	@RequestMapping("/")
-	public String home(Criteria cri, Model model) {
-		
-//		List<Board> list = boardservice.selectBoardList(cri);
-//		model.addAttribute("list", list);
-		
+	public String home( Model model) {
+	
 		int boardListCnt = boardservice.boardListCnt();
 		
-//		PageMaker pageMaker = new PageMaker();
-//		pageMaker.setCriteria(cri);
-//		pageMaker.setTotalCount(boardListCnt);
-		
 		Criteria criteria = new Criteria();
-		criteria.setCriteria(cri);
+		criteria.setCriteria(criteria);
 		criteria.setTotalCount(boardListCnt);
 		
-		List<Board> list = boardservice.selectBoardList(cri);
+		List<Board> list = boardservice.selectBoardList(criteria);
 		
 		model.addAttribute("list",list);
-		model.addAttribute("paging", cri);
+		model.addAttribute("paging", criteria);
 		
 		return "/boardList";
 	}
@@ -189,6 +182,9 @@ public class Controller {
 		
 		return "success";
 	}
+	
+	
+	
 	
 	
 //	@RequestMapping(value="/commentList", produces="application/json; charset=utf-8")

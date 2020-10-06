@@ -12,6 +12,7 @@
 				bDate,
 				bHit
 		FROM	board 
+		where bNum > 0
 		ORDER BY bNum DESC
 		LIMIT #{startPage}, #{perPageNum}
 		]]>

@@ -14,7 +14,7 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired BoardMapper boardmapper;
 	@Override
 	public List<Board> selectBoardList(Criteria cri){
-		return boardmapper.selectBoardList();
+		return boardmapper.selectBoardList(cri);
 	};
 	
 	@Override

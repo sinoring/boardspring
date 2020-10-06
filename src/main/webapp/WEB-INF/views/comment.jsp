@@ -25,7 +25,7 @@
 				<table class="table">
 					<tr>
 						<td>
-							<textarea style="width: 1100px" rows="3" cols="30" id="cComment" name="cComment" placeholder="댓글을 입력해주세요."></textarea>
+							<textarea style="width: 1100px" rows="3" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력해주세요."></textarea>
 							
 							<div>
 								<a href="#" onClick="fn_comment('${result.code}')" class="btn pull-right btn-success">등록</a>
@@ -50,18 +50,22 @@
 function fn_comment(code){
 
 	$.ajax({
-	type : 'POST',
-	url : "<c:url value='/commentInsert'/>",
-	data : $("#commentForm").serialize(),
-	success : function(data){
-		if(data=="success")
-		{
-			getCommentList();
-			$("#comment").val("");
+		type : 'POST',
+		//url : "<c:url value='/commentInsert'/>",
+		url : "/commentInsert",
+		//data : $("#commentForm").serialize(), //serialize 요즘안씀
+		data : JSON.stringify({ cContent: $('#cCotent').val(), bNum: $('#bNum').val()}), 
+		success : function(data){
+			if(data=="success")
+			{
+				//getCommentList();
+				//$("#comment").val("");
 
-		}
-	},
-	error:function(request,status,error){
+				$('#commentList').append(data);
+				//만약 커멘트리스트가 추가가아닌 for문으로 돌면 #이아니라 .으로 해야함(클래스)
+			}
+		},
+		error:function(request,status,error){
 		}
 	});
 }

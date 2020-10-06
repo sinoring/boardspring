@@ -5,10 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.boardspring.example.domain.Board;
+import com.boardspring.example.paging.Criteria;
 
 @Mapper
 public interface BoardMapper {
-	public List<Board> selectBoardList();
+	public List<Board> selectBoardList(Criteria cri);
 	public int boardListCnt();
 	public void boardInsert(Board board);
 	public Board boardView(int bNum);

@@ -1,5 +1,8 @@
 package com.boardspring.example.paging;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class Criteria {
 	private Criteria criteria;
 	private int page;
@@ -69,6 +72,13 @@ public class Criteria {
 		
 		prev = startPage == 1? false:true;
 		next = endPage * criteria.getPerPageNum() >= totalCount? false:true;
+	}
+	
+	public String makeQuery(int page) {
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+										.queryParam("page", page)
+										.build();
+		return uriComponents.toUriString();
 	}
 
 	public int getDisplayPageNum() {
