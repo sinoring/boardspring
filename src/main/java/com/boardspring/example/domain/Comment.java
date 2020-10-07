@@ -5,10 +5,17 @@ import java.util.Date;
 public class Comment {
 	private int cNum;
 	private int bNum;
+	private String u_id;
 	private String cContent;
-	private String cUser;
+	
 	private Date cDate;
 	
+	public String getU_id() {
+		return u_id;
+	}
+	public void setU_id(String u_id) {
+		this.u_id = u_id;
+	}
 	public int getcNum() {
 		return cNum;
 	}
@@ -27,12 +34,7 @@ public class Comment {
 	public void setcContent(String cContent) {
 		this.cContent = cContent;
 	}
-	public String getcUser() {
-		return cUser;
-	}
-	public void setcUser(String cUser) {
-		this.cUser = cUser;
-	}
+	
 	public Date getcDate() {
 		return cDate;
 	}

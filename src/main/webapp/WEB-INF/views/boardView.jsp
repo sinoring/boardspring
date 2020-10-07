@@ -28,6 +28,7 @@
     </div>
     <br>
     <br>
+    
     <%@ include file="../views/comment.jsp" %>
    
 </body>

@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -166,91 +167,45 @@ public class Controller {
 		return "/denied";
 	}
 	
+	@RequestMapping(value="/commentList")
+	public List<Comment> commentList(Model model) throws Exception{
+		return commentservice.commentList();
+	}
 	
 	@RequestMapping(value="/commentInsert")
 	@ResponseBody
-	public String ajax_addComment(@ModelAttribute("Comment") Comment comment, HttpServletRequest request) throws Exception{
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("user");
-		
+	public Map<String, Object> commentInsert(@RequestBody Comment comment) throws Exception{
+		Map<String, Object> result = new HashMap<>();
 		try {
-			comment.setcUser(user.getU_id());
 			commentservice.commentInsert(comment);
-		} catch (Exception e) {
-			e.printStackTrace();
+			result.put("status", "OK");
+			} catch(Exception e) {
+		e.printStackTrace();
+		result.put("status", "false");
 		}
-		
-		return "success";
+		return result;
 	}
 	
 	
-	
-	
-	
-//	@RequestMapping(value="/commentList", produces="application/json; charset=utf-8")
-//	@ResponseBody
-//	public ResponseEntity ajax_commentList(@ModelAttribute("Board")Board board, HttpServletRequest request) throws Exception{
-//		HttpHeaders responseHeaders = new HttpHeaders();
-//		ArrayList<HashMap> hmlist = new ArrayList<HashMap>();
-//		
-//		List<Comment> comment = commentservice.commentList();
-//		
-//		if(comment.size() > 0) {
-//			for(int i=0; i<comment.size(); i++) {
-//				HashMap hm = new HashMap();
-//				hm.put("cNum", comment.get(i).getcNum());
-//				hm.put("cContent", comment.get(i).getcContent());
-//				hm.put("cUser", comment.get(i).getcUser());
-//				
-//				hmlist.add(hm);
-//			}
-//		}
-//		
-//		JSONArray json = new JSONArray(hmlist);
-//		return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
-//		
-//	}
-	
-
-//	@RequestMapping("/commentList")
-//	@ResponseBody //비동기 처리
-//	public List<Comment> commentList(Model model) throws Exception{
-//		return commentservice.commentList();
-//		
-//	}
-//	
-//	@RequestMapping("/commentInsert")
-//	@ResponseBody
-//	public int commentInsert(@RequestParam int bNum, @RequestParam String cContent, @RequestParam String cUser )throws Exception{
-//		Comment comment = new Comment();
-//		comment.setbNum(bNum);
-//		comment.setcContent(cContent);
-//		comment.setcUser(cUser);
-//		
-//		return commentservice.commentInsert(comment);
-//	}
-//	
-//	@RequestMapping("/commentModify")
-//	@ResponseBody
-//	public int commentModify(@RequestParam int cNum, @RequestParam String cContent) throws Exception{
-//		Comment comment = new Comment();
-//		comment.setcNum(cNum);
-//		comment.setcContent(cContent);
-//		
-//		return commentservice.commentModify(comment);
-//	}
-//	
-//	@RequestMapping("/commentDelete/{cNum}")
-//	@ResponseBody
-//	public int commentDelete(@RequestParam int cNum) throws Exception{
-//		Comment comment = new Comment();
-//		comment.setcNum(cNum);
-//		
-//		return commentservice.commentDelete(cNum);
-//	}
-	
-	
+//	  @RequestMapping(value="/commentInsert")
+//	  @ResponseBody public String ajax_addComment(@ModelAttribute("Comment")
+//	  Comment comment, HttpServletRequest request) throws Exception{ HttpSession
+//	  session = request.getSession(); User user =
+//	  (User)session.getAttribute("user");
+//	  
+//	  try { comment.setU_id(user.getU_id());
+//	  commentservice.commentInsert(comment); } catch (Exception e) {
+//	  e.printStackTrace(); 
+//	  }
+//	  
+//	  return "success"; 
+//	  }
+	 
 	
 }
+	
+
+	
+
 
 

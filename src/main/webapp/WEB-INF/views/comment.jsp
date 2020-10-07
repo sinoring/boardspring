@@ -9,6 +9,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="${path}/include/js/common.js"></script>
+<script src="${path}/ckeditor/ckeditor.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.css">
 <meta charset="EUC-KR">
 <title>Insert title here</title>
@@ -44,20 +47,21 @@
 	</form>
 </div>
 
-<script>
+<script type="text/javascript">
 
 //댓글등록
-function fn_comment(code){
 
+function fn_comment(code){
 	$.ajax({
 		type : 'POST',
 		//url : "<c:url value='/commentInsert'/>",
 		url : "/commentInsert",
+		contentType: 'application/json',
 		//data : $("#commentForm").serialize(), //serialize 요즘안씀
 		data : JSON.stringify({ cContent: $('#cCotent').val(), bNum: $('#bNum').val()}), 
 		success : function(data){
 			if(data=="success")
-			{
+			{	alert("댓글이 등록되었습니다.");
 				//getCommentList();
 				//$("#comment").val("");
 
@@ -68,6 +72,7 @@ function fn_comment(code){
 		error:function(request,status,error){
 		}
 	});
+
 }
 
 //초기페이지 로딩시 댓글 불러오기
@@ -82,11 +87,12 @@ $(function(){
 function getCommentList(){
 	$.ajax({
 		type : 'GET',
-		url : "<c:url value='/boardList'/>",
+		url : "/commentList",
 		dataType : "json",
-		data : $("#commentForm").serialize(),
+		/*data : $("#commentForm").serialize()  */
+		data : JSON.stringify({cContent: $('#cCotent').val(), bNum: $('#bNum').val()}),
 		//serialize 메소드를 사용하면 form에있는 객체들을 한번에 불러올수이씀
-		contentType : "application/x-www.form-urlencoded; charset=utf-8",
+		contentType: 'application/json',
 		// ajax 요청을할때 디폴트 콘텐트타입
 		success : function(data){
 
@@ -96,7 +102,7 @@ function getCommentList(){
 			if(data.length > 0){
 					for(i=0; i<data.length; i++){
 						html += "<div>";
-						html += "<div><table class='table'><h6><strong>"+data[i].cUser+"</strong></h6>";
+						html += "<div><table class='table'><h6><strong>"+data[i].u_id+"</strong></h6>";
 						html += "</table></div>";
 						html += "</div>";
 						}

@@ -12,8 +12,8 @@
 	
 	<insert id="commentInsert" parameterType="com.boardspring.example.domain.Comment">
 		INSERT INTO
-		comment(cNum, bNum, cContent, cUser, cDate)
-		VALUES(#{cNum}, #{bNum}, #{cContent}, #{cUser}, now())
+		comment(cNum, bNum, cContent, u_id, cDate)
+		VALUES(#{cNum}, #{bNum}, #{cContent}, #{u_id}, now())
 	</insert>
 	
 	<update id="commentModify" parameterType="com.boardspring.example.domain.Comment" >
