@@ -13,8 +13,8 @@ public class CommentServiceImpl implements CommentService {
 	@Autowired CommentMapper commentmapper;
 	
 	@Override
-	public List<Comment> commentList() throws Exception{
-		return commentmapper.commentList();
+	public List<Comment> commentList(int bNum) throws Exception{
+		return commentmapper.commentList(bNum);
 	}
 
 	@Override

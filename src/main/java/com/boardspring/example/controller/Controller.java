@@ -91,7 +91,8 @@ public class Controller {
 	
 	@RequestMapping(value="/boardView")
 	public String boardView(Model model,@RequestParam("bNum")int bNum){
-		model.addAttribute("boardView",boardservice.boardView(bNum));
+		Board board = boardservice.boardView(bNum);
+		model.addAttribute("boardView", board);
 		//jsp에 boardView. 형식으로 지정
 		boardservice.updateHit(bNum);
 		return "/boardView";
@@ -168,22 +169,23 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/commentList")
-	public List<Comment> commentList(Model model) throws Exception{
-		return commentservice.commentList();
+	@ResponseBody
+	public List<Comment> commentList(@RequestParam("bNum")int bNum) throws Exception{
+		return commentservice.commentList(bNum);
 	}
 	
 	@RequestMapping(value="/commentInsert")
 	@ResponseBody
 	public Map<String, Object> commentInsert(@RequestBody Comment comment) throws Exception{
-		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> success = new HashMap<>();
 		try {
 			commentservice.commentInsert(comment);
-			result.put("status", "OK");
+			success.put("status", "OK");
 			} catch(Exception e) {
 		e.printStackTrace();
-		result.put("status", "false");
+		success.put("status", "false");
 		}
-		return result;
+		return success;
 	}
 	
 	
