@@ -8,6 +8,7 @@
 	
 	<select id="commentList" resultType="com.boardspring.example.domain.Comment">
 		SELECT * FROM comment 
+		ORDER BY bNum DESC
 	</select>
 	
 	<insert id="commentInsert" parameterType="com.boardspring.example.domain.Comment">

@@ -20,6 +20,7 @@
 <body>
 <sec:authentication var="user" property="principal" />
 
+
 <div class = "container">
 	<form id="commentForm" name="commentForm" method="post">
 	<br><br>
@@ -27,7 +28,7 @@
 			<div>
 				<span><strong>Comments</strong></span> <span id="cCnt"></span>
 			</div>
-			<div>
+			<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
 				<table class="table">
 					<tr>
 						<td>
@@ -82,7 +83,7 @@ function fn_comment(){
 				//getCommentList();
 				//$("#comment").val("");
 
-				$('#commentList').append(data);
+				$("#commentList").append(data);
 				//만약 커멘트리스트가 추가가아닌 for문으로 돌면 #이아니라 .으로 해야함(클래스)
 			}
 		},
@@ -91,6 +92,8 @@ function fn_comment(){
 	});
 
 }
+
+
 
 //초기페이지 로딩시 댓글 불러오기
 
@@ -112,15 +115,32 @@ function commentList(){
 		success : function(data){
 			console.log(data[12].cContent);
 			var htmls = "";
-			if(data < 1){
+			if(data.length < 1){
 				htmls.push("등록된 댓글이 없습니다.");
 			} else{
 				$(data).each(function(){
-					htmls += "<div>";
-					htmls += "<div><table class='table'><h6><strong>"+data[i].u_id+"</strong></h6>";
+					/* htmls += "<div>";
+					htmls += "<div><table class='table'><h6><strong>"+data[i].username+"</strong></h6>";
 					htmls += "</table></div>";
-					htmls += "</div>";
-
+					htmls += "</div>"; */
+					htmls += '<div class="media text-muted pt-3" id="bNum" + this.bNum + "">';
+					htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
+					htmls += '<title>Placeholder</title>';
+					//htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
+					//htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
+					htmls += '</svg>';
+					htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
+					htmls += '<span class="d-block">';
+					htmls += '<strong class="text-gray-dark">' + this.cDate + '</strong>';
+					htmls += '<span style="padding-left: 7px; font-size: 9px">';
+					htmls += '<a href="javascript:void(0)" onclick="fn_Modify(' + this.bNum + ', \'' + this.cDate + '\', \'' + this.cContent + '\' )" style="padding-right:5px">수정</a>';
+                    htmls += '<a href="javascript:void(0)" onclick="commentDel(' + this.bNum + ')" >삭제</a>';
+                    htmls += '</span>';
+                    htmls += '</span>';
+                    htmls += '<br>';
+                    htmls += this.cContent;
+                    htmls += '</p>';
+                    htmls += '</div>';
 				});
 			}
 			$("#commentList").html(htmls);
@@ -130,7 +150,60 @@ function commentList(){
 	    }
 	});
 }
-			
+
+
+
+function fn_Modify(bNum, cDate, cContent){
+	var htmls = "";
+	htmls += '<div class="media text-muted pt-3" id="bNum' + bNum '">';
+	htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
+	htmls += '<title>Placeholder</title>';
+	htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
+	htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
+	htmls += '</svg>';
+	htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
+	htmls += '<span class="d-block">';
+	htmls += '<strong class="text-gray-dark">' + cDate + '</strong>';
+	htmls += '<span style="padding-left: 7px; font-size: 9pt">';
+	htmls += '<a href="javascript:void(0)" onclick="fn_Modify(' + bNum + ', \'' + cDate + '\')" style="padding-right:5px">저장</a>';
+	htmls += '<a href="javascript:void(0)" onClick="commentList()">취소<a>';
+	htmls += '</span>';
+	htmls += '</span>';		
+	htmls += '<textarea name="editContent" id="editContent" class="form-control" rows="3">';
+	htmls += content;
+	htmls += '</textarea>';
+	htmls += '</p>';
+	htmls += '</div>';
+	$('#bNum' + bNum).replaceWith(htmls);
+	$('#bNum' + bNum + ' #editContent').focus();
+
+	
+}
+
+	
+	$.ajax({
+		url : "/commentModify",
+		type : 'POST',
+		data : JSON.stringify(
+			{
+				cContent: $('#editContent').val(), 
+				bNum: ${boardView.bNum}
+
+			}
+		),
+		contentType : 'application/json',
+		dataType : 'text',
+		success : function(data){
+			console.log(data);
+			commentList();
+			}
+			, error: function(error){
+				console.log("에러: " + error);
+				}
+		});
+}
+
+
 			/* var html = "";
 			var cCnt = data.length;
 
