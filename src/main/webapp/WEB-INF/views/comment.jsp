@@ -82,7 +82,7 @@ function fn_comment(){
 				//getCommentList();
 				//$("#comment").val("");
 
-				$('#commentForm').append(data);
+				$('#commentList').append(data);
 				//만약 커멘트리스트가 추가가아닌 for문으로 돌면 #이아니라 .으로 해야함(클래스)
 			}
 		},
@@ -100,33 +100,34 @@ function fn_comment(){
 //댓글불러오기
 
 function commentList(){
-	
 	$.ajax({
 		type : 'GET',
 		url : "/commentList",
 		dataType : "json",
 		/*data : $("#commentForm").serialize()  */
-		data : JSON.stringify({cContent: $('#cContent').val(), bNum: $('#bNum').val()}),
+		data : { bNum: $('#bNum').val() },
 		//serialize 메소드를 사용하면 form에있는 객체들을 한번에 불러올수이씀
 		contentType: 'application/json',
 		// ajax 요청을할때 디폴트 콘텐트타입
 		success : function(data){
-
+			console.log(data[12].cContent);
 			var htmls = "";
 			if(data < 1){
 				htmls.push("등록된 댓글이 없습니다.");
-				} else{
-					$(data).each(function(){
-						htmls += "<div>";
-						htmls += "<div><table class='table'><h6><strong>"+data[i].u_id+"</strong></h6>";
-						htmls += "</table></div>";
-						htmls += "</div>";
+			} else{
+				$(data).each(function(){
+					htmls += "<div>";
+					htmls += "<div><table class='table'><h6><strong>"+data[i].u_id+"</strong></h6>";
+					htmls += "</table></div>";
+					htmls += "</div>";
 
-						});
-					}
-					$("#commentList").html(html);
-
-				}
+				});
+			}
+			$("#commentList").html(htmls);
+		},
+		error : function(error) {
+	        console.dir(error);
+	    }
 	});
 }
 			

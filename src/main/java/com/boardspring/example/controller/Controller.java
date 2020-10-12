@@ -171,7 +171,8 @@ public class Controller {
 	@RequestMapping(value="/commentList")
 	@ResponseBody
 	public List<Comment> commentList(@RequestParam("bNum")int bNum) throws Exception{
-		return commentservice.commentList(bNum);
+		List<Comment> list = commentservice.commentList(bNum);
+		return list;
 	}
 	
 	@RequestMapping(value="/commentInsert")
