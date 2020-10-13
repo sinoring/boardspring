@@ -12,6 +12,17 @@
 				bDate,
 				bHit
 		FROM	board 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="searchType=='bTitle' and keyword != null and keyword != ''">
+				AND TITLE like CONCAT('%',#{keyword}, '%')
+			</if>
+			<if test="searchType=='bContent' and keyword != null and keyword !=''">
+				AND CONTENT like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="seachType=='bUser' and keyword != null and keyword !=''">
+				AND bUser like CONCAT('%', #{keyword}, '$')
+			</if>
+		</trim>
 		where bNum > 0
 		ORDER BY bNum DESC
 		LIMIT #{startPage}, #{perPageNum}
@@ -23,6 +34,21 @@
 				count(*)
 			FROM
 				board
+				
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="keyword != null and keyword != '' ">
+				<if test="searchType=='bTitle'">
+					AND TITLE like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType=='bContent">
+					AND CONTENT like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType=='bUser">
+					AND bUser like CONCAT('%', #{keyword}, '%')
+				</if>
+			</if>
+		
+		</trim>
 	</select>
 	<insert id="boardInsert" parameterType="com.boardspring.example.domain.Board">
 		INSERT INTO board (bTitle, bId, bPw, bContent, bUser, bHit)

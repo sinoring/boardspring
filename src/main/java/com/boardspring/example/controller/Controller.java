@@ -39,6 +39,7 @@ import com.boardspring.example.service.UserService;
 import com.mysql.cj.xdevapi.JsonArray;
 import com.boardspring.example.mapper.BoardMapper;
 import com.boardspring.example.paging.Criteria;
+import com.boardspring.example.paging.Search;
 
 @org.springframework.stereotype.Controller
 
@@ -62,13 +63,20 @@ public class Controller {
 	
 //	게시글목록
 	@RequestMapping("/")
-	public String home( Model model) {
+	public String home( Model model//, 
+						//@RequestParam(required = false, defaultValue="bTitle") String searchType
+						//@RequestParam(required = false) String keyword 
+						){
 	
 		int boardListCnt = boardservice.boardListCnt();
 		
 		Criteria criteria = new Criteria();
 		criteria.setCriteria(criteria);
 		criteria.setTotalCount(boardListCnt);
+		
+		/*Search search = new Search();
+		search.setSearchType(searchType);
+		search.setKeyword(keyword);*/
 		
 		List<Board> list = boardservice.selectBoardList(criteria);
 		
@@ -189,6 +197,37 @@ public class Controller {
 		}
 		return success;
 	}
+	
+	@RequestMapping(value="/commentModify")
+	@ResponseBody
+	public Map<String, Object> commentModify(@RequestBody Comment comment) throws Exception{
+		Map<String, Object> success = new HashMap<>();
+		try {
+			commentservice.commentModify(comment);
+			success.put("status", "OK");
+		} catch(Exception e) {
+			e.printStackTrace();
+			success.put("status", "false");
+		} 
+		return success;
+		
+	}
+	
+	@RequestMapping(value="/commentDelete")
+	@ResponseBody
+	public Map<String, Object> commentDelete(@RequestParam("bNum")int bNum) throws Exception{
+		Map<String, Object> success = new HashMap<>();
+		try {
+			commentservice.commentDelete(bNum);
+			success.put("status", "OK");
+		} catch(Exception e) {
+			e.printStackTrace();
+			success.put("status", "false");
+		} 
+		return success;
+	}
+	
+	
 	
 	
 //	  @RequestMapping(value="/commentInsert")

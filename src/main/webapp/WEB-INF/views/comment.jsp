@@ -13,13 +13,14 @@
 <script src="${path}/include/js/common.js"></script>
 <script src="${path}/ckeditor/ckeditor.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 <link rel="stylesheet" href="/css/bootstrap.css">
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 </head>
 <body>
 <sec:authentication var="user" property="principal" />
-
 
 <div class = "container">
 	<form id="commentForm" name="commentForm" method="post">
@@ -133,7 +134,7 @@ function commentList(){
 					htmls += '<span class="d-block">';
 					htmls += '<strong class="text-gray-dark">' + this.cDate + '</strong>';
 					htmls += '<span style="padding-left: 7px; font-size: 9px">';
-					htmls += '<a href="javascript:void(0)" onclick="fn_Modify(' + this.bNum + ', \'' + this.cDate + '\', \'' + this.cContent + '\' )" style="padding-right:5px">수정</a>';
+					htmls += '<a href="javascript:void(0)" onclick="commentEditModify(' + this.bNum + ', \'' + this.cDate + '\', \'' + this.cContent + '\' )" style="padding-right:5px">수정</a>';
                     htmls += '<a href="javascript:void(0)" onclick="commentDel(' + this.bNum + ')" >삭제</a>';
                     htmls += '</span>';
                     htmls += '</span>';
@@ -153,9 +154,9 @@ function commentList(){
 
 
 
-function fn_Modify(bNum, cDate, cContent){
+ /* function commentEditModify(bNum, cDate, cContent){
 	var htmls = "";
-	htmls += '<div class="media text-muted pt-3" id="bNum' + bNum '">';
+	htmls += '<div class="media text-muted pt-3" id="bNum' + bNum + '">';
 	htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
 	htmls += '<title>Placeholder</title>';
 	htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
@@ -165,25 +166,24 @@ function fn_Modify(bNum, cDate, cContent){
 	htmls += '<span class="d-block">';
 	htmls += '<strong class="text-gray-dark">' + cDate + '</strong>';
 	htmls += '<span style="padding-left: 7px; font-size: 9pt">';
-	htmls += '<a href="javascript:void(0)" onclick="fn_Modify(' + bNum + ', \'' + cDate + '\')" style="padding-right:5px">저장</a>';
+	htmls += '<a href="javascript:void(0)" onclick="commentModify(' + bNum + ', \'' + cDate + '\')" style="padding-right:5px">저장</a>';
 	htmls += '<a href="javascript:void(0)" onClick="commentList()">취소<a>';
 	htmls += '</span>';
 	htmls += '</span>';		
 	htmls += '<textarea name="editContent" id="editContent" class="form-control" rows="3">';
-	htmls += content;
+	htmls += cContent;
 	htmls += '</textarea>';
 	htmls += '</p>';
 	htmls += '</div>';
 	$('#bNum' + bNum).replaceWith(htmls);
-	$('#bNum' + bNum + ' #editContent').focus();
+	$('#bNum' + bNum + '#editContent').focus();
 
-	
-}
+}  */ 
 
-	
+	/* function commentModify(bNum, cDate){
 	$.ajax({
-		url : "/commentModify",
-		type : 'POST',
+		url : "${pageContext.request.contextPath}/commentModify}",
+		type : "POST",
 		data : JSON.stringify(
 			{
 				cContent: $('#editContent').val(), 
@@ -191,17 +191,50 @@ function fn_Modify(bNum, cDate, cContent){
 
 			}
 		),
-		contentType : 'application/json',
-		dataType : 'text',
+		contentType : "application/json", "X-HTTP-Method-Override": "POST";
+		dataType : "text",
 		success : function(data){
 			console.log(data);
 			commentList();
-			}
+		}
 			, error: function(error){
 				console.log("에러: " + error);
 				}
-		});
-}
+		}); 
+} */
+
+	 /* function commentDel(bNum){
+		$.ajax({
+				url : "/commentDelete",
+				type : 'POST',
+				data : {bNum: ${boardView.bNum}},
+				dataType : 'text',
+				success : function(data){
+					commentList();
+					
+					}
+					,error: function(error){
+							console.log("에러" + error);
+						}
+				
+
+			})
+		}  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 			/* var html = "";
