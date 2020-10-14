@@ -6,10 +6,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.boardspring.example.domain.Board;
 import com.boardspring.example.paging.Criteria;
+import com.boardspring.example.paging.Search;
 
 @Mapper
 public interface BoardMapper {
-	public List<Board> selectBoardList(Criteria cri);
+	public List<Board> selectBoardList(Search search);
 	public int boardListCnt();
 	public void boardInsert(Board board);
 	public Board boardView(int bNum);

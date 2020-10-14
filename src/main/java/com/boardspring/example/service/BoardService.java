@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.boardspring.example.domain.Board;
 import com.boardspring.example.paging.Criteria;
+import com.boardspring.example.paging.Search;
 
 public interface BoardService {
-	public List<Board> selectBoardList(Criteria cri);
+	public List<Board> selectBoardList(Search search);
 	public int boardListCnt();
 	public void boardInsert(Board board);
 	public Board boardView(int bNum);

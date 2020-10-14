@@ -63,25 +63,30 @@ public class Controller {
 	
 //	게시글목록
 	@RequestMapping("/")
-	public String home( Model model//, 
-						//@RequestParam(required = false, defaultValue="bTitle") String searchType
-						//@RequestParam(required = false) String keyword 
-						){
+	public String home( Model model, 
+						@RequestParam(required = false, defaultValue="1") int page,
+						@RequestParam(required = false, defaultValue="1") int range,
+						@RequestParam(required = false, defaultValue="bTitle") String searchType,
+						@RequestParam(required = false) String keyword,
+						@ModelAttribute("search") Search search
+						)throws Exception{
 	
-		int boardListCnt = boardservice.boardListCnt();
+//		Criteria criteria = new Criteria();
+//		criteria.setCriteria(criteria);
+//		criteria.setTotalCount(boardListCnt);
 		
-		Criteria criteria = new Criteria();
-		criteria.setCriteria(criteria);
-		criteria.setTotalCount(boardListCnt);
-		
-		/*Search search = new Search();
+		model.addAttribute("search",search);
 		search.setSearchType(searchType);
-		search.setKeyword(keyword);*/
+		search.setKeyword(keyword);
 		
-		List<Board> list = boardservice.selectBoardList(criteria);
+		List<Board> list = boardservice.selectBoardList(search);
+		int listCnt = boardservice.boardListCnt();
 		
+		search.pageInfo(page, range, listCnt);
+		
+		model.addAttribute("boardList",boardservice.selectBoardList(search));
 		model.addAttribute("list",list);
-		model.addAttribute("paging", criteria);
+		model.addAttribute("pagingnation", search);
 		
 		return "/boardList";
 	}
@@ -226,6 +231,8 @@ public class Controller {
 		} 
 		return success;
 	}
+	
+	
 	
 	
 	

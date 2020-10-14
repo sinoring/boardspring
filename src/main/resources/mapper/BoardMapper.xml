@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boardspring.example.mapper.BoardMapper">
 	<select id="selectBoardList" resultType="Board" parameterType="com.boardspring.example.paging.Criteria" >
-		<![CDATA[
+		
 		SELECT	bNum,
 				bId,
 				bPw,
@@ -19,14 +19,14 @@
 			<if test="searchType=='bContent' and keyword != null and keyword !=''">
 				AND CONTENT like CONCAT('%', #{keyword}, '%')
 			</if>
-			<if test="seachType=='bUser' and keyword != null and keyword !=''">
+			<if test="searchType=='bUser' and keyword != null and keyword !=''">
 				AND bUser like CONCAT('%', #{keyword}, '$')
 			</if>
 		</trim>
 		where bNum > 0
 		ORDER BY bNum DESC
 		LIMIT #{startPage}, #{perPageNum}
-		]]>
+		
 	</select>
 	<select id="boardListCnt" resultType="Int">
 		
@@ -47,7 +47,7 @@
 					AND bUser like CONCAT('%', #{keyword}, '%')
 				</if>
 			</if>
-		
+	
 		</trim>
 	</select>
 	<insert id="boardInsert" parameterType="com.boardspring.example.domain.Board">

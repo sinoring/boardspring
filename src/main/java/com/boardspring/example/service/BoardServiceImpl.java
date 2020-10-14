@@ -6,15 +6,15 @@ import org.springframework.stereotype.Service;
 
 import com.boardspring.example.domain.Board;
 import com.boardspring.example.mapper.BoardMapper;
-import com.boardspring.example.paging.Criteria;
+import com.boardspring.example.paging.Search;
 
 @Service("BoardServiceImpl")
 public class BoardServiceImpl implements BoardService {
 	
 	@Autowired BoardMapper boardmapper;
 	@Override
-	public List<Board> selectBoardList(Criteria cri){
-		return boardmapper.selectBoardList(cri);
+	public List<Board> selectBoardList(Search search){
+		return boardmapper.selectBoardList(search);
 	};
 	
 	@Override

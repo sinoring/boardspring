@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
 	<h2>게시글목록</h2>
@@ -62,52 +63,60 @@
 			</c:forEach>
 		</table>
 		<ul class="btn-group pagination" style="textalign:center">
-			<c:if test="${paging.prev }">
+			<c:if test="${pagingnation.prev }">
 				<li>
-					<a href="/?page=${paging.makeQuery(paging.startPage-1)}">이전</a>
+					<a href="/?page=${pagingnation.makeQuery(pagingnation.startPage-1)}">이전</a>
 				</li>
 			</c:if>
-			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="pageNum">
+			<c:forEach begin="${pagingnation.startPage }" end="${pagingnation.endPage }" var="pageNum">
 				<li>
 					<a href='<c:url value="/?page=${pageNum }"/>'>${pageNum }</a>
 				</li>
 			</c:forEach>
-			<c:if test="${paging.next && paging.endPage > 0 }">
+			<c:if test="${pagingnation.next && pagingnation.endPage > 0 }">
 				<li>
-					<a href="/?page=${paging.makeQuery(paging.endPage+1)}">다음</a>
+					<a href="/?page=${paging.makeQuery(pagingnation.endPage+1)}">다음</a>
 				</li>
 			</c:if>
 
 		</ul>
 		
-		<div class="form-group row justify-content-center"  style="width:300px; margin:auto;">
-			<div style="padding-right:10px;">
-				<select class="form-control form-control-sm" name="searchType" id="searchType">
-					<option value="bTitle">제목</option>
-					<option value="bContent">내용</option>
-					<option value="bUser">작성자</option>
-				</select>
-			</div>
-			<div style="padding-right:10px;">
-				<input type="text" class="form-control form-control-sm" name="keyword" id="keyword">
-			</div>
-			<div>
-				<button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">검색</button>
-			</div>
+		<div class="form-group row justify-content-center"  style="width:200px; margin:auto;">
+			
+				<div style="padding-right:10px;">
+					<select class="form-control form-control-sm" name="searchType" id="searchType">
+						<option value="bTitle">제목</option>
+						<option value="bContent">내용</option>
+						<option value="bUser">작성자</option>
+					</select>
+				</div>
+			
+				<div style="padding-right:10px;">
+					<input type="text" class="form-control form-control-sm" name="keyword" id="keyword" >
+				</div>
+				<div>
+					<button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">검색</button>
+				</div>
+			
 		</div>
 		<script>
-		
-			$(document).on('click','#btnSearch', function(e){
-				e.preventDefault();
-				var url = "$(selectBoardList)";
-				url = url + "?searchType=" + $('$searchType'.val());
-				url = url + "&keyword=" + $('$keyword'.val());
-				location.href = url;
-				console.log(url);
-				}
+		$(document).on('click', '#btnSearch', function(e){
+			let page = ${pagingnation.page};
+			let range = ${pagingnation.range};
+			let searchType = '${pagingnation.searchType}';
+			let keyword = '${pagingnation.keyword}';
 
+			e.preventDefault();
+			var url = "${pageContext.request.contextPath}/boardList";
+			url = url + "?page=" + page;
+			url = url + "&range=" + range;
+			url = url + "?searchType=" + $('#searchType').val();
+			url = url + "&keyword=" + $('#keyword').val();
+			location.href = url;
+			console.log(url);
 
-					)
+		});	
+
 		</script>
 </body>
 </html>

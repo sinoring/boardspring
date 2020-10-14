@@ -6,14 +6,27 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class Criteria {
 	private Criteria criteria;
 	private int page;
+	private int range;
+	private int pageCnt;
 	private int perPageNum;
 	private int totalCount;
+	private int rangeSize = 10;
 	private int displayPageNum = 10;
 	private int startPage;
+	private int startList;
 	private int endPage;
 	private boolean prev;
 	private boolean next;
 	
+	
+	public int getRangeSize() {
+		return rangeSize;
+	}
+
+	public void setRangeSize(int rangeSize) {
+		this.rangeSize = rangeSize;
+	}
+
 	public int getPageStart() {
 		return (this.page-1)*perPageNum;
 	}
@@ -35,6 +48,23 @@ public class Criteria {
 		}
 	}
 	
+	public int getRange() {
+		return range;
+	}
+
+	public void setRange(int range) {
+		this.range = range;
+	}
+
+	
+	public int getPageCnt() {
+		return pageCnt;
+	}
+
+	public void setPageCnt(int pageCnt) {
+		this.pageCnt = pageCnt;
+	}
+
 	public int getPerPageNum() {
 		return perPageNum;
 	}
@@ -60,8 +90,17 @@ public class Criteria {
 		this.totalCount = totalCount;
 		calcData();
 	}
+
 	
-	private void calcData() {
+	public int getStartList() {
+		return startList;
+	}
+
+	public void setStartList(int startList) {
+		this.startList = startList;
+	}
+	
+	public void calcData() {
 		endPage = (int)(Math.ceil(criteria.getPage()/(double)displayPageNum) * displayPageNum);
 		startPage = (endPage - displayPageNum) + 1;
 		int tempEndPage = (int)(Math.ceil(totalCount / (double) criteria.getPerPageNum()));
@@ -73,6 +112,27 @@ public class Criteria {
 		prev = startPage == 1? false:true;
 		next = endPage * criteria.getPerPageNum() >= totalCount? false:true;
 	}
+	
+	public void pageInfo(int page, int range, int totalCount) {
+		this.page = page;
+		this.range = range;
+		this.totalCount = totalCount;
+		
+		this.pageCnt = (int)Math.ceil(totalCount/displayPageNum);
+		this.startPage = (range-1) * rangeSize + 1;
+		this.endPage = range * rangeSize;
+		this.startList = (page - 1)*displayPageNum;
+		this.prev = startPage == 1? false:true;
+//		this.next = endPage * criteria.getPerPageNum() >= totalCount? false:true;
+		this.next = endPage > pageCnt? false:true;
+		if(this.endPage > this.pageCnt) {
+			this.endPage = this.pageCnt;
+			this.next = false;
+		}
+	}
+	
+	
+	
 	
 	public String makeQuery(int page) {
 		UriComponents uriComponents = UriComponentsBuilder.newInstance()
