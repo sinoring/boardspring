@@ -11,7 +11,8 @@
 				bUser,
 				bDate,
 				bHit
-		FROM	board 
+				
+		FROM	board
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="searchType=='bTitle' and keyword != null and keyword != ''">
 				AND TITLE like CONCAT('%',#{keyword}, '%')

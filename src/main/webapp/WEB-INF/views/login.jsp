@@ -53,7 +53,7 @@ input {
 	</c:if>
 	<div>
 	<h5>로그인 페이지</h5>
-	<form action="/loginPro" method="post">
+	<form action="/loginPro" method="post" style="width:380px; margin:auto" >
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<input type="text" placeholder="아이디" name="username" required style="height:30px; width: 380px"/><br>
 		<input type="password" placeholder="비밀번호" name="password" required style="height:30px; width: 380px"/><br>

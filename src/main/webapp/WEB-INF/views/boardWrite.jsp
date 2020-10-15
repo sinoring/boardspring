@@ -6,37 +6,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 </head>
 <body>
-	<h3> 게시글 작성</h3>
-	<div style="padding : 30px;">
+	
+	<h3 style="width:500px; margin:auto; padding-top:200px;"> 게시글 작성</h3>
+	<div style="padding : 30px; width:500px; margin:auto;">
 		<form action="/boardSave" method="POST" >
 		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}">
 			<div class="form-group">
-				<label>제목</label>
-				<input type="text" name="bTitle" class="from-control">
+				<label for="exampleFormControlInput1">제목</label>
+				<input type="text" name="bTitle" class="form-control" id="exampleFormControlInput1">
 			</div>
 			<div class="form-group">
-				<label>ID</label>
-				<input type="number" name="bId" class="from-control">
+				<label for="exampleFormControlInput1">ID</label>
+				<input type="number" name="bId" class="form-control" id="exampleFormControlInput1">
 			</div>
 			<div class="form-group">
 				<label>password</label>
-				<input type="password" name="bPw" class="from-control">
+				<input type="password" name="bPw" class="form-control">
 			</div>
 			<div class="form-group">
-				<label>작성자</label>
-				<input type="text" name="bUser" class="from-control">
+				<label  for="exampleFormControlInput1">작성자</label>
+				<input type="text" name="bUser" class="form-control" id="exampleFormControlInput1">
 			</div>
 			<div>
-				<label>내용</label>
-				<textarea name="bContent" class="from-control" rows="5"></textarea>
+				<label for="exampleFormControlTextarea1">내용</label>
+				<textarea name="bContent" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
 			</div>
-			<input type="submit" class="btn btn-default" value="작성">
+			<br>
+			<input type="submit" class="btn btn-default" value="작성" style="width:100px; margin:auto;">
 		</form>
 	</div> 
 </body>

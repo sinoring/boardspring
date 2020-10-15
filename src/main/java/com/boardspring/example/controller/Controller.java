@@ -99,12 +99,14 @@ public class Controller {
 	@RequestMapping(value="/boardSave")
 	public String saveBoard(Board board) {
 		boardservice.boardInsert(board);
+		
 		return "redirect:/";
 	}
 	
 	@RequestMapping(value="/boardView")
 	public String boardView(Model model,@RequestParam("bNum")int bNum){
 		Board board = boardservice.boardView(bNum);
+		model.addAttribute("comment", new Comment());
 		model.addAttribute("boardView", board);
 		//jsp에 boardView. 형식으로 지정
 		boardservice.updateHit(bNum);
@@ -183,7 +185,7 @@ public class Controller {
 	
 	@RequestMapping(value="/commentList")
 	@ResponseBody
-	public List<Comment> commentList(@RequestParam("bNum")int bNum) throws Exception{
+	public List<Comment> commentList( @RequestParam("bNum")int bNum) throws Exception{
 		List<Comment> list = (commentservice.commentList(bNum));
 		
 		return list;

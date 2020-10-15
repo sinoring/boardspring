@@ -5,15 +5,7 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
-<%
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	Object principal = auth.getPrincipal();
-	
-	String name = "";
-	if(principal != null){
-		name = auth.getName();
-	}
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +25,7 @@
 				<a href="/beforeSignUp">회원가입</a>
 			</sec:authorize>
 			<sec:authorize access="isAuthenticated()">
-				<h2><%=name %>님 반갑습니다.</h2>
+				<h2><sec:authentication property="principal.username"/>님 반갑습니다.</h2>
 				<a href="/logout">로그아웃</a>
 			</sec:authorize>
 		</div>
@@ -43,7 +35,9 @@
 				<a href="/admin">관리자</a>
 			</sec:authorize>
 		</div>
-		<button class="btn btn-primary" style="float : right;" onclick="location.href='/boardWrite'">작성</button>
+			<sec:authorize access="isAuthenticated()">
+				<button class="btn btn-primary" style="float : right;" onclick="location.href='/boardWrite'">작성</button>
+			</sec:authorize>
 		<table class="table">
 			<tr>
 				<th>No</th>
@@ -75,7 +69,7 @@
 			</c:forEach>
 			<c:if test="${pagingnation.next && pagingnation.endPage > 0 }">
 				<li>
-					<a href="/?page=${paging.makeQuery(pagingnation.endPage+1)}">다음</a>
+					<a href="/?page=${pagingnation.makeQuery(pagingnation.endPage+1)}">다음</a>
 				</li>
 			</c:if>
 
@@ -99,6 +93,8 @@
 				</div>
 			
 		</div>
+		
+		
 		<script>
 		$(document).on('click', '#btnSearch', function(e){
 			let page = ${pagingnation.page};
@@ -107,16 +103,22 @@
 			let keyword = '${pagingnation.keyword}';
 
 			e.preventDefault();
-			var url = "${pageContext.request.contextPath}/boardList";
+			var url = "${pageContext.request.contextPath}/";
 			url = url + "?page=" + page;
 			url = url + "&range=" + range;
 			url = url + "?searchType=" + $('#searchType').val();
 			url = url + "&keyword=" + $('#keyword').val();
 			location.href = url;
 			console.log(url);
-
+			
+			if(keyword == null){
+				alert("검색어를 입력해주세요.");
+				location.href='/'
+				}
 		});	
-
+		
 		</script>
+		
+		
 </body>
 </html>
