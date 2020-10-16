@@ -106,7 +106,7 @@
 			var url = "${pageContext.request.contextPath}/";
 			url = url + "?page=" + page;
 			url = url + "&range=" + range;
-			url = url + "?searchType=" + $('#searchType').val();
+			url = url + "&searchType=" + $('#searchType').val();
 			url = url + "&keyword=" + $('#keyword').val();
 			location.href = url;
 			console.log(url);

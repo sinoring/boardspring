@@ -122,7 +122,7 @@ public class Criteria {
 		this.startPage = (range-1) * rangeSize + 1;
 		this.endPage = range * rangeSize;
 		this.startList = (page - 1)*displayPageNum;
-		this.prev = startPage == 1? false:true;
+		this.prev = range == 1? false:true;
 //		this.next = endPage * criteria.getPerPageNum() >= totalCount? false:true;
 		this.next = endPage > pageCnt? false:true;
 		if(this.endPage > this.pageCnt) {

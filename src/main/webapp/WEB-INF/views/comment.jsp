@@ -222,21 +222,6 @@ function commentList(){
 		}  */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			/* var html = "";
 			var cCnt = data.length;
 

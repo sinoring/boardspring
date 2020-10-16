@@ -65,7 +65,7 @@ public class Controller {
 	@RequestMapping("/")
 	public String home( Model model, 
 						@RequestParam(required = false, defaultValue="1") int page,
-						@RequestParam(required = false, defaultValue="1") int range,
+						@RequestParam(required = false, defaultValue="1") int rangeSize,
 						@RequestParam(required = false, defaultValue="bTitle") String searchType,
 						@RequestParam(required = false) String keyword,
 						@ModelAttribute("search") Search search
@@ -74,19 +74,25 @@ public class Controller {
 //		Criteria criteria = new Criteria();
 //		criteria.setCriteria(criteria);
 //		criteria.setTotalCount(boardListCnt);
-		
+		//검색
 		model.addAttribute("search",search);
 		search.setSearchType(searchType);
 		search.setKeyword(keyword);
 		
+		//전체게시글수
 		List<Board> list = boardservice.selectBoardList(search);
 		int listCnt = boardservice.boardListCnt();
 		
-		search.pageInfo(page, range, listCnt);
+		//검색
+		search.pageInfo(page, rangeSize, listCnt);
 		
-		model.addAttribute("boardList",boardservice.selectBoardList(search));
+		//페이징
+		
 		model.addAttribute("list",list);
 		model.addAttribute("pagingnation", search);
+		
+		//게시글화면출력
+		model.addAttribute("boardList",boardservice.selectBoardList(search));
 		
 		return "/boardList";
 	}
@@ -125,14 +131,14 @@ public class Controller {
 		return "/boardModify"; 
 	}
 	
-//	@PostMapping(value="/boardModify2")
-//	public String boardModify(Board board) {
-//		boardservice.boardModify(board);
-//		return "/boardModify";
-//		//return "redirect:/";
-//	}
+	//@PostMapping(value="/boardModify")
+	//public String boardModify(Board board) {
+	//	boardservice.boardModify(board);
+		
+	//	return "redirect:/";
+	//}
 	
-	@RequestMapping("/boardMod")
+	@RequestMapping("/boardModify")
 	public String boardMod(Board board) {
 		return "redirect:/";
 	}

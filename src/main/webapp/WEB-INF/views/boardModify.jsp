@@ -18,7 +18,7 @@
 	                <h1>글쓰기 화면</h1>
 	            </div>
 	            <div>
-	                <form class="form-group" name="frm-modify" action="/boardMod" method="post">
+	                <form class="form-group" name="frm-modify" action="/boardModify" method="post">
 	                <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}">
 		                <table class="table table-striped row">
 		                    <tr>
@@ -26,14 +26,16 @@
 		                        <td>${board.bUser}</td>
 		                    </tr>
 		                    <tr>
+		                    	<th class="col-md-2">번호</th>
+		                    	<td>${board.bNum}</td>
+		                    </tr>
+		                    <tr>
 		                        <th>제목</th>
 		                        <td><input class="form-control" type="text" name="bTitle" value="${board.bTitle}"></td>
 		                    </tr>
 		                    <tr>
 		                        <th>내용</th>
-		                        <td><textarea class="form-control" name="bContent" rows="10" cols="">
-		                        ${board.bContent}
-		                        </textarea></td>
+		                        <td><textarea class="form-control" name="bContent" rows="10" cols="">${board.bContent}</textarea></td>
 		                    </tr>
 		                    <tr>
 		                        <th>암호</th>

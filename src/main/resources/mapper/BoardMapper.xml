@@ -2,9 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boardspring.example.mapper.BoardMapper">
 	<select id="selectBoardList" resultType="Board" parameterType="com.boardspring.example.paging.Criteria" >
-		
+		 
 		SELECT	bNum,
-				bId,
 				bPw,
 				bTitle,
 				bContent,
@@ -13,22 +12,21 @@
 				bHit
 				
 		FROM	board
-		<trim prefix="WHERE" prefixOverrides="AND|OR">
-			<if test="searchType=='bTitle' and keyword != null and keyword != ''">
-				AND TITLE like CONCAT('%',#{keyword}, '%')
-			</if>
-			<if test="searchType=='bContent' and keyword != null and keyword !=''">
-				AND CONTENT like CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="searchType=='bUser' and keyword != null and keyword !=''">
-				AND bUser like CONCAT('%', #{keyword}, '$')
-			</if>
-		</trim>
-		where bNum > 0
 		ORDER BY bNum DESC
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="searchType=='bTitle' and keyword != null and keyword != '' ">
+				AND bTitle like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='bContent' and keyword != null and keyword != '' ">
+				AND bContent like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='bUser' and keyword != null and keyword != '' ">
+				AND bUser like CONCAT('%', #{keyword}, '%')
+			</if>	
+		</trim>
 		LIMIT #{startPage}, #{perPageNum}
-		
 	</select>
+	
 	<select id="boardListCnt" resultType="Int">
 		
 			SELECT
@@ -39,22 +37,21 @@
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="keyword != null and keyword != '' ">
 				<if test="searchType=='bTitle'">
-					AND TITLE like CONCAT('%', #{keyword}, '%')
+					AND bTitle like CONCAT('%', #{keyword}, '%')
 				</if>
-				<if test="searchType=='bContent">
-					AND CONTENT like CONCAT('%', #{keyword}, '%')
+				<if test="searchType=='bContent'">
+					AND bContent like CONCAT('%', #{keyword}, '%')
 				</if>
-				<if test="searchType=='bUser">
+				<if test="searchType=='bUser'">
 					AND bUser like CONCAT('%', #{keyword}, '%')
 				</if>
-			</if>
-	
+     	 </if>
 		</trim>
 	</select>
 	<insert id="boardInsert" parameterType="com.boardspring.example.domain.Board">
-		INSERT INTO board (bTitle, bId, bPw, bContent, bUser, bHit)
+		INSERT INTO board (bTitle, bPw, bContent, bUser, bHit)
 		values
-		(#{bTitle},#{bId},#{bPw},#{bContent},#{bUser},0)
+		(#{bTitle},#{bPw},#{bContent},#{bUser},0)
 	</insert>
 	<select id="boardView" parameterType="int" resultType="com.boardspring.example.domain.Board">
 		SELECT * FROM board where bNum = #{bNum}
@@ -66,6 +63,6 @@
 		DELETE FROM board where bNum = #{bNum}
 	</delete>
 	<update id="boardModify" parameterType="com.boardspring.example.domain.Board">
-		UPDATE board set TITLE = #{bTitle}, CONTENT = #{bContent} where bNum #{bNum}
+		UPDATE board set bTitle = #{bTitle}, bContent = #{bContent} where bNum = #{bNum}
 	</update>
 </mapper>

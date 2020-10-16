@@ -21,10 +21,10 @@
 				<label for="exampleFormControlInput1">Á¦¸ñ</label>
 				<input type="text" name="bTitle" class="form-control" id="exampleFormControlInput1">
 			</div>
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label for="exampleFormControlInput1">ID</label>
 				<input type="number" name="bId" class="form-control" id="exampleFormControlInput1">
-			</div>
+			</div> -->
 			<div class="form-group">
 				<label>password</label>
 				<input type="password" name="bPw" class="form-control">
