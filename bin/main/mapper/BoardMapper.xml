@@ -12,7 +12,7 @@
 				bHit
 				
 		FROM	board
-		ORDER BY bNum DESC
+		
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="searchType=='bTitle' and keyword != null and keyword != '' ">
 				AND bTitle like CONCAT('%', #{keyword}, '%')
@@ -24,6 +24,7 @@
 				AND bUser like CONCAT('%', #{keyword}, '%')
 			</if>	
 		</trim>
+		ORDER BY bNum DESC
 		LIMIT #{startPage}, #{perPageNum}
 	</select>
 	

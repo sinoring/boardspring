@@ -119,7 +119,7 @@ public class Controller {
 		return "/boardView";
 	}
 	
-	@RequestMapping(value="/boardDel")
+	@RequestMapping(value="/deleteBoard")
 	public String boardDel(@RequestParam("bNum")int bNum) {
 		boardservice.boardDel(bNum);
 		return "redirect:/";

@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <style>
 
 body {
@@ -88,12 +89,20 @@ body {
     </table> --%>
     <div style= "float:right;">
         <input type="button" class="btn btn-sm btn-primary"  value="수정" onclick="location.href='boardModify?bNum=${boardView.bNum}'">
-        <input type="button" class="btn btn-sm btn-primary"  value="삭제" onclick="del(${boardView.bNum})">
+        <input type="button" class="btn btn-sm btn-primary" id="btnDelete"  value="삭제" onclick="del(${boardView.bNum})">
     </div>
     <br>
     <br>
     
     <%@ include file="../views/comment.jsp" %>
-   
+    
+   <script>
+		$(document).on('click','#btnDelete', function(){
+			var url = "${pageContext.request.contextPath}/deleteBoard";
+			url = url + "?bNum=" + ${boardView.bNum};
+			location.href = url;
+			});
+
+   </script>
 </body>
 </html>
