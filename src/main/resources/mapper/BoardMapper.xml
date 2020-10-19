@@ -25,13 +25,13 @@
 			</if>	
 		</trim>
 		ORDER BY bNum DESC
-		LIMIT #{startPage}, #{perPageNum}
+		LIMIT #{startList}, #{listSize}
 	</select>
 	
 	<select id="boardListCnt" resultType="Int">
 		
 			SELECT
-				count(*)
+				count(*) as listCnt
 			FROM
 				board
 				

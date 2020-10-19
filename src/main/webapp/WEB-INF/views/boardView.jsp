@@ -3,7 +3,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="layoutTag" tagdir="/WEB-INF/tags"%>
-
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +48,7 @@ body {
 
 
 </style>
-<title>boarview</title>
+<title>boardview</title>
 
 </head>
 <body>
@@ -87,21 +88,25 @@ body {
 
     	</tbody>
     </table> --%>
-    <div style= "float:right;">
-        <input type="button" class="btn btn-sm btn-primary"  value="수정" onclick="location.href='boardModify?bNum=${boardView.bNum}'">
-        <input type="button" class="btn btn-sm btn-primary" id="btnDelete"  value="삭제" onclick="del(${boardView.bNum})">
-    </div>
+    <sec:authorize access="isAuthenticated()">
+   	 <div style= "float:right;">
+     	   <input type="button" class="btn btn-sm btn-primary"  value="수정" onclick="location.href='boardModify?bNum=${boardView.bNum}'">
+     	   <input type="button" class="btn btn-sm btn-primary" id="btnDelete"  value="삭제" onclick="del(${boardView.bNum})">
+   	 </div>
+    </sec:authorize>
     <br>
     <br>
-    
+    ${username }
     <%@ include file="../views/comment.jsp" %>
     
    <script>
 		$(document).on('click','#btnDelete', function(){
+			if(confirm("정말 삭제하시겠습니까?")){
 			var url = "${pageContext.request.contextPath}/deleteBoard";
 			url = url + "?bNum=" + ${boardView.bNum};
 			location.href = url;
-			});
+			}
+		});
 
    </script>
 </body>

@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
 
@@ -58,21 +59,21 @@
 		</table>
 		<ul class="btn-group pagination" style="textalign:center">
 			<c:if test="${pagingnation.prev }">
-				<li>
+				<%-- <li>
 					<a href="/?page=${pagingnation.makeQuery(pagingnation.startPage-1)}">이전</a>
-				</li>
+				</li> --%>
+				<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${pagingnation.page}','${pagingnation.range}','${pagingnation.rangeSize}')">Previous</a></li>
 			</c:if>
-			<c:forEach begin="${pagingnation.startPage }" end="${pagingnation.endPage }" var="pageNum">
-				<li>
-					<a href='<c:url value="/?page=${pageNum }"/>'>${pageNum }</a>
+			<c:forEach begin="${pagingnation.startPage }" end="${pagingnation.endPage }" var="idx">
+				<li class="page-item">
+					<c:out value="${pagingnation.page == idx ? 'active' : ''}"/> "><a class="page-link" href="#" onClick="fn_pagination('${idx}', '${pagingnation.range}', '${pagingnation.rangeSize}')"> ${idx} </a>
 				</li>
 			</c:forEach>
-			<c:if test="${pagingnation.next && pagingnation.endPage > 0 }">
-				<li>
-					<a href="/?page=${pagingnation.makeQuery(pagingnation.endPage+1)}">다음</a>
+			<c:if test="${pagingnation.next}">
+				<li class="page-item">
+					<a class="page-link" href="#" onClick="fn_next('${pagingnation.range}','${pagingnation.range}', '${pagingnation.rangeSize}')" >Next</a>
 				</li>
 			</c:if>
-
 		</ul>
 		
 		<div class="form-group row justify-content-center"  style="width:200px; margin:auto;">
@@ -96,6 +97,41 @@
 		
 		
 		<script>
+		function fn_prev(page, range, rangeSize){
+			var page = ((range-2) * rangeSize) + 1;
+			var range = range - 1;
+
+			var url = "${pageContext.request.contextPath}/";
+			url = url + "?page=" + page;
+			url = url + "&range=" + range;
+
+			location.href = url;
+			
+			}
+
+		function fn_pagination(page, range, rangeSize, searchType, keyword ){
+			var url = "${pageContext.request.contextPath}/";
+			url = url + "?page" + page;
+			url = url + "&range" + range;
+
+			location.href = url;
+			
+			}
+
+		function fn_next(page, range, rangeSize){
+			var page = parseInt((range * rangeSize)) + 1;
+			var range = parseInt(range) + 1;
+
+			var url = "${pageContext.request.contextPath}/";
+			url = url + "?page" + page;
+			url = url + "&range" + range;
+
+			location.href = url;
+			
+			}
+
+
+		
 		$(document).on('click', '#btnSearch', function(e){
 			let page = ${pagingnation.page};
 			let range = ${pagingnation.range};

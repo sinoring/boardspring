@@ -38,7 +38,6 @@ import com.boardspring.example.service.CommentService;
 import com.boardspring.example.service.UserService;
 import com.mysql.cj.xdevapi.JsonArray;
 import com.boardspring.example.mapper.BoardMapper;
-import com.boardspring.example.paging.Criteria;
 import com.boardspring.example.paging.Search;
 
 @org.springframework.stereotype.Controller
@@ -85,9 +84,8 @@ public class Controller {
 		
 		//°Ë»ö
 		search.pageInfo(page, rangeSize, listCnt);
-		
+
 		//ÆäÀÌÂ¡
-		
 		model.addAttribute("list",list);
 		model.addAttribute("pagingnation", search);
 		
@@ -103,14 +101,14 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/boardSave")
-	public String saveBoard(Board board) {
+	public String saveBoard(Board board)throws Exception {
 		boardservice.boardInsert(board);
 		
 		return "redirect:/";
 	}
 	
 	@RequestMapping(value="/boardView")
-	public String boardView(Model model,@RequestParam("bNum")int bNum){
+	public String boardView(Model model,@RequestParam("bNum")int bNum)throws Exception{
 		Board board = boardservice.boardView(bNum);
 		model.addAttribute("comment", new Comment());
 		model.addAttribute("boardView", board);
@@ -120,13 +118,13 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/deleteBoard")
-	public String boardDel(@RequestParam("bNum")int bNum) {
+	public String boardDel(@RequestParam("bNum")int bNum)throws Exception {
 		boardservice.boardDel(bNum);
 		return "redirect:/";
 	}
 	
 	@GetMapping(value="/boardModify")
-	public String boardModify(@RequestParam("bNum")int bNum, Model model) {
+	public String boardModify(@RequestParam("bNum")int bNum, Model model)throws Exception {
 		model.addAttribute("board", boardservice.boardView(bNum));
 		return "/boardModify"; 
 	}
