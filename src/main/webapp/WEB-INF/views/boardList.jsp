@@ -1,51 +1,51 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="utf-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
-	<h2>°Ô½Ã±Û¸ñ·Ï</h2>
+	<h2>ê²Œì‹œê¸€ëª©ë¡</h2>
 		<hr>
 		<div>
 		
 			<sec:authorize access="isAnonymous()">
-				<a href="/login">·Î±×ÀÎ</a>
-				<a href="/beforeSignUp">È¸¿ø°¡ÀÔ</a>
+				<a href="/login">ë¡œê·¸ì¸</a>
+				<a href="/beforeSignUp">íšŒì›ê°€ì…</a>
 			</sec:authorize>
 			<sec:authorize access="isAuthenticated()">
-				<h2><sec:authentication property="principal.username"/>´Ô ¹İ°©½À´Ï´Ù.</h2>
-				<a href="/logout">·Î±×¾Æ¿ô</a>
+				<h2><sec:authentication property="principal.username"/>ë‹˜ ë°˜ê°‘ìŠµë‹ˆë‹¤.</h2>
+				<a href="/logout">ë¡œê·¸ì•„ì›ƒ</a>
 			</sec:authorize>
 		</div>
 		<div>
 			<sec:authorize access="isAuthenticated()">
-				<a href="/user/info">³» Á¤º¸</a>
-				<a href="/admin">°ü¸®ÀÚ</a>
+				<a href="/user/info">ë‚´ ì •ë³´</a>
+				<a href="/admin">ê´€ë¦¬ì</a>
 			</sec:authorize>
 		</div>
 			<sec:authorize access="isAuthenticated()">
-				<button class="btn btn-primary" style="float : right;" onclick="location.href='/boardWrite'">ÀÛ¼º</button>
+				<button class="btn btn-primary" style="float : right;" onclick="location.href='/boardWrite'">ì‘ì„±</button>
 			</sec:authorize>
 		<table class="table">
 			<tr>
 				<th>No</th>
-				<th>Á¦¸ñ</th>
-				<th>ÀÛ¼ºÀÚ</th>
-				<th>ÀÛ¼º³¯Â¥</th>
-				<th>Á¶È¸¼ö</th>
+				<th>ì œëª©</th>
+				<th>ì‘ì„±ì</th>
+				<th>ì‘ì„±ë‚ ì§œ</th>
+				<th>ì¡°íšŒìˆ˜</th>
 			</tr>
 			<c:forEach var="list" items="${list }">
 				<tr>
@@ -60,18 +60,19 @@
 		<ul class="btn-group pagination" style="textalign:center">
 			<c:if test="${pagingnation.prev }">
 				<%-- <li>
-					<a href="/?page=${pagingnation.makeQuery(pagingnation.startPage-1)}">ÀÌÀü</a>
+					<a href="/?page=${pagingnation.makeQuery(pagingnation.startPage-1)}">ì´ì „</a>
 				</li> --%>
-				<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${pagingnation.page}','${pagingnation.range}','${pagingnation.rangeSize}')">Previous</a></li>
+				<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${pagingnation.page}','${pagingnation.range}','${pagingnation.rangeSize}','${search.searchType }', '${search.keyword }')">Previous</a></li>
 			</c:if>
-			<c:forEach begin="${pagingnation.startPage }" end="${pagingnation.endPage }" var="idx">
+			<c:forEach begin="${pagingnation.startPage}" end="${pagingnation.endPage }" var="idx">
 				<li class="page-item">
-					<c:out value="${pagingnation.page == idx ? 'active' : ''}"/> "><a class="page-link" href="#" onClick="fn_pagination('${idx}', '${pagingnation.range}', '${pagingnation.rangeSize}')"> ${idx} </a>
+					<c:out value="${pagingnation.page == idx ? 'active' : ''}"/>
+						<a class="page-link" href="#" onClick="fn_pagination('${idx}', '${pagingnation.range}', '${pagingnation.rangeSize}','${search.searchType }', '${search.keyword }')"> ${idx} </a>
 				</li>
 			</c:forEach>
 			<c:if test="${pagingnation.next}">
 				<li class="page-item">
-					<a class="page-link" href="#" onClick="fn_next('${pagingnation.range}','${pagingnation.range}', '${pagingnation.rangeSize}')" >Next</a>
+					<a class="page-link" href="#" onClick="fn_next('${pagingnation.range}','${pagingnation.range}', '${pagingnation.rangeSize}','${search.searchType }', '${search.keyword }')" >Next</a>
 				</li>
 			</c:if>
 		</ul>
@@ -80,9 +81,9 @@
 			
 				<div style="padding-right:10px;">
 					<select class="form-control form-control-sm" name="searchType" id="searchType">
-						<option value="bTitle">Á¦¸ñ</option>
-						<option value="bContent">³»¿ë</option>
-						<option value="bUser">ÀÛ¼ºÀÚ</option>
+						<option value="bTitle">ì œëª©</option>
+						<option value="bContent">ë‚´ìš©</option>
+						<option value="bUser">ì‘ì„±ì</option>
 					</select>
 				</div>
 			
@@ -90,7 +91,7 @@
 					<input type="text" class="form-control form-control-sm" name="keyword" id="keyword" >
 				</div>
 				<div>
-					<button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">°Ë»ö</button>
+					<button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">ê²€ìƒ‰</button>
 				</div>
 			
 		</div>
@@ -109,22 +110,22 @@
 			
 			}
 
-		function fn_pagination(page, range, rangeSize, searchType, keyword ){
+		function fn_pagination(page, range,rangeSize, searchType, keyword ){
 			var url = "${pageContext.request.contextPath}/";
-			url = url + "?page" + page;
-			url = url + "&range" + range;
+			url = url + "?page=" + page;
+			url = url + "&range=" + range;
 
 			location.href = url;
 			
 			}
 
-		function fn_next(page, range, rangeSize){
+		function fn_next(page, range,rangeSize){
 			var page = parseInt((range * rangeSize)) + 1;
 			var range = parseInt(range) + 1;
 
 			var url = "${pageContext.request.contextPath}/";
-			url = url + "?page" + page;
-			url = url + "&range" + range;
+			url = url + "?page=" + page;
+			url = url + "&range=" + range;
 
 			location.href = url;
 			
@@ -147,8 +148,8 @@
 			location.href = url;
 			console.log(url);
 			
-			if(keyword == null){
-				alert("°Ë»ö¾î¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			if(keyword == 'null'){
+				alert("ê²€ìƒ‰ì–´ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 				location.href='/'
 				}
 		});	

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -59,7 +59,7 @@ body {
 			<div class="bg-white rounded shadow-sm">
 				<div class="board_title"><c:out value="${boardview.bTitle}"/></div>
 				<div class="board_info_box">
-					<span class="board_author"><c:out value="${boardView.bUser}"/>,</span><span class="board_date"><c:out value="${boardView.bDate}"/></span>
+					<span class="board_author"><c:out value="${boardView.bUser}"/></span><span class="board_date"><c:out value="${boardView.bDate}"/></span>
 				</div>
 				<div class="board_content">${boardView.bContent}</div>
 
@@ -67,41 +67,20 @@ body {
 		</div>
 	</article> 
 	
-    <%-- <table class="boardview">
-    	<tbody class="bg-white rounded shadow-sm">
-    		<tr>
-    			<th class="board_title">Á¦¸ñ</th>
-    			<td>${boardView.bTitle}</td>
-    			<th class="board_hit">Á¶È¸¼ö</th>
-    			<td>${boardView.bHit}</td>
-    		</tr>
-    		<tr>
-    			<th class="board_author">ÀÛ¼ºÀÚ</th>
-    			<td>${boardView.bUser}</td>
-    			<th class="board_date">ÀÛ¼º½Ã°£</th>
-    			<td>${boardView.bDate}</td>
-    		</tr>
-    		<tr class="board_info_box">
-    			<th>³»¿ë</th>
-    			<td colspan="3" class="board_content">${boardView.bContent }</td>
-    		</tr>
-
-    	</tbody>
-    </table> --%>
     <sec:authorize access="isAuthenticated()">
    	 <div style= "float:right;">
-     	   <input type="button" class="btn btn-sm btn-primary"  value="¼öÁ¤" onclick="location.href='boardModify?bNum=${boardView.bNum}'">
-     	   <input type="button" class="btn btn-sm btn-primary" id="btnDelete"  value="»èÁ¦" onclick="del(${boardView.bNum})">
+     	   <input type="button" class="btn btn-sm btn-primary"  value="ìˆ˜ì •" onclick="location.href='/boardModifyForm?bNum=${boardView.bNum}'">
+     	   <input type="button" class="btn btn-sm btn-primary" id="btnDelete"  value="ì‚­ì œ" onclick="del(${boardView.bNum})">
    	 </div>
     </sec:authorize>
     <br>
     <br>
-    ${username }
+   
     <%@ include file="../views/comment.jsp" %>
     
    <script>
 		$(document).on('click','#btnDelete', function(){
-			if(confirm("Á¤¸» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?")){
+			if(confirm("ì •ë§ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?")){
 			var url = "${pageContext.request.contextPath}/deleteBoard";
 			url = url + "?bNum=" + ${boardView.bNum};
 			location.href = url;

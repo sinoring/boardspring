@@ -54,9 +54,15 @@
 		values
 		(#{bTitle},#{bPw},#{bContent},#{bUser},0)
 	</insert>
+	
 	<select id="boardView" parameterType="int" resultType="com.boardspring.example.domain.Board">
-		SELECT * FROM board where bNum = #{bNum}
+		SELECT * 
+		FROM board ta
+		LEFT join comment tb ON ta.bNum = tb.bNum
+		WHERE ta.bNum = #{bNum}
 	</select>
+	
+	
 	<update id="updateHit" parameterType="int">
 		UPDATE board set bHit = bHit+1 where bNum = #{bNum}
 	</update>

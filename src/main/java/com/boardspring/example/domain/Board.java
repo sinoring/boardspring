@@ -1,5 +1,9 @@
 package com.boardspring.example.domain;
 
+import org.springframework.stereotype.Component;
+
+
+@Component
 public class Board {
 	private int bNum;
 	private int bId;

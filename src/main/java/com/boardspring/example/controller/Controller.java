@@ -61,10 +61,14 @@ public class Controller {
 //	}
 	
 //	게시글목록
+	/*
+	 * @RequestMapping(value = "/{page}/{range}", method=RequestMethod.GET) public
+	 * String home( Model model, )throws Exception{ page }
+	 */
 	@RequestMapping("/")
 	public String home( Model model, 
 						@RequestParam(required = false, defaultValue="1") int page,
-						@RequestParam(required = false, defaultValue="1") int rangeSize,
+						@RequestParam(required = false, defaultValue="1") int range,
 						@RequestParam(required = false, defaultValue="bTitle") String searchType,
 						@RequestParam(required = false) String keyword,
 						@ModelAttribute("search") Search search
@@ -74,23 +78,23 @@ public class Controller {
 //		criteria.setCriteria(criteria);
 //		criteria.setTotalCount(boardListCnt);
 		//검색
-		model.addAttribute("search",search);
 		search.setSearchType(searchType);
 		search.setKeyword(keyword);
 		
+		//검색
+		int listCnt = boardservice.boardListCnt(search);
+		search.pageInfo(page, range, listCnt);
+		
 		//전체게시글수
 		List<Board> list = boardservice.selectBoardList(search);
-		int listCnt = boardservice.boardListCnt();
 		
-		//검색
-		search.pageInfo(page, rangeSize, listCnt);
-
 		//페이징
 		model.addAttribute("list",list);
 		model.addAttribute("pagingnation", search);
 		
 		//게시글화면출력
 		model.addAttribute("boardList",boardservice.selectBoardList(search));
+		model.addAttribute("search",search);
 		
 		return "/boardList";
 	}
@@ -108,7 +112,7 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/boardView")
-	public String boardView(Model model,@RequestParam("bNum")int bNum)throws Exception{
+	public String boardView(Model model, @RequestParam("bNum")int bNum)throws Exception{
 		Board board = boardservice.boardView(bNum);
 		model.addAttribute("comment", new Comment());
 		model.addAttribute("boardView", board);
@@ -123,23 +127,31 @@ public class Controller {
 		return "redirect:/";
 	}
 	
-	@GetMapping(value="/boardModify")
-	public String boardModify(@RequestParam("bNum")int bNum, Model model)throws Exception {
-		model.addAttribute("board", boardservice.boardView(bNum));
-		return "/boardModify"; 
-	}
-	
-	//@PostMapping(value="/boardModify")
-	//public String boardModify(Board board) {
-	//	boardservice.boardModify(board);
+	@RequestMapping(value="/boardModifyForm")
+	public String boardModifyForm(/*@RequestParam("bNum")int bNum, Model model*/HttpServletRequest request)throws Exception {
+		//model.addAttribute("board", boardservice.boardView(bNum));
 		
-	//	return "redirect:/";
-	//}
-	
-	@RequestMapping("/boardModify")
-	public String boardMod(Board board) {
-		return "redirect:/";
+		Board board = new Board();
+		board.setbContent(request.getParameter("bContent"));
+		board.setbTitle(request.getParameter("bTitle"));
+		board.setbNum(Integer.parseInt(request.getParameter("bNum")));
+		
+		boardservice.boardModify(board);
+		
+		return "redirect:/boardView/"+request.getParameter("bNum"); 
 	}
+	
+//	@RequestMapping(value="/boardModify")
+//	public String boardModify(Board board) throws Exception {
+//		boardservice.boardModify(board);
+//		
+//		return "redirect:/";
+//	}
+	
+//	@RequestMapping("/boardModify")
+//	public String boardMod(Board board) {
+//		return "redirect:/";
+//	}
 
 	@RequestMapping("/beforeSignUp")
 	public String beforeSignUp() {

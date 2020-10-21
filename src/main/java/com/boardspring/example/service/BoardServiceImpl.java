@@ -18,8 +18,8 @@ public class BoardServiceImpl implements BoardService {
 	};
 	
 	@Override
-	public int boardListCnt()throws Exception {
-		return boardmapper.boardListCnt();
+	public int boardListCnt(Search search)throws Exception {
+		return boardmapper.boardListCnt(search);
 	}
 	
 	
@@ -49,7 +49,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public void boardModify(Board board)throws Exception {
+	public void boardModifyForm(int bNum)throws Exception {
+		boardmapper.boardModifyForm(bNum);
+	}
+	
+	@Override
+	public void boardModify(Board board)throws Exception{
 		boardmapper.boardModify(board);
 	}
 	

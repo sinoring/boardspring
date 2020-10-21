@@ -2,6 +2,9 @@ package com.boardspring.example.domain;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Comment {
 	private int cNum;
 	private int bNum;
