@@ -18,7 +18,7 @@
 	                <h1>글쓰기 화면</h1>
 	            </div>
 	            <div>
-	                <form class="form-group" name="frm-modify" action="/boardModifyForm" method="post">
+	                <form class="form-group" name="frm-modify" action="/boardModify" method="post">
 	                <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}">
 		                <table class="table table-striped row">
 		                    <tr>

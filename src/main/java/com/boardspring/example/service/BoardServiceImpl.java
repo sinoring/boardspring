@@ -48,10 +48,6 @@ public class BoardServiceImpl implements BoardService {
 		return boardmapper.boardDel(bNum);
 	}
 	
-	@Override
-	public void boardModifyForm(int bNum)throws Exception {
-		boardmapper.boardModifyForm(bNum);
-	}
 	
 	@Override
 	public void boardModify(Board board)throws Exception{

@@ -1,9 +1,9 @@
 package com.boardspring.example.domain;
 
-import org.springframework.stereotype.Component;
+import java.util.List;
 
 
-@Component
+
 public class Board {
 	private int bNum;
 	private int bId;
@@ -14,7 +14,15 @@ public class Board {
 	private String bDate;
 	private int bHit;
 	private String username;
-	
+	private List<Comment> comment;
+
+
+	public List<Comment> getComment() {
+		return comment;
+	}
+	public void setComment(List<Comment> comment) {
+		this.comment = comment;
+	}
 	public String getUsername() {
 		return username;
 	}

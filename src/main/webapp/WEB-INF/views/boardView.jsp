@@ -69,7 +69,7 @@ body {
 	
     <sec:authorize access="isAuthenticated()">
    	 <div style= "float:right;">
-     	   <input type="button" class="btn btn-sm btn-primary"  value="수정" onclick="location.href='/boardModifyForm?bNum=${boardView.bNum}'">
+     	   <input type="button" class="btn btn-sm btn-primary"  value="수정" onclick="location.href='/boardModify?bNum=${boardView.bNum}'">
      	   <input type="button" class="btn btn-sm btn-primary" id="btnDelete"  value="삭제" onclick="del(${boardView.bNum})">
    	 </div>
     </sec:authorize>

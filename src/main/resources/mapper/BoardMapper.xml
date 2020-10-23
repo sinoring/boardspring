@@ -60,6 +60,8 @@
 		FROM board ta
 		LEFT join comment tb ON ta.bNum = tb.bNum
 		WHERE ta.bNum = #{bNum}
+		
+		SELECT * FROM board
 	</select>
 	
 	

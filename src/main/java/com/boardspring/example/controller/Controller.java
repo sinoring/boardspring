@@ -127,20 +127,28 @@ public class Controller {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="/boardModifyForm")
-	public String boardModifyForm(/*@RequestParam("bNum")int bNum, Model model*/HttpServletRequest request)throws Exception {
-		//model.addAttribute("board", boardservice.boardView(bNum));
-		
-		Board board = new Board();
-		board.setbContent(request.getParameter("bContent"));
-		board.setbTitle(request.getParameter("bTitle"));
-		board.setbNum(Integer.parseInt(request.getParameter("bNum")));
-		
+	@RequestMapping(value="/boardModify")
+	public String boardModify(Board board) throws Exception {
 		boardservice.boardModify(board);
 		
-		return "redirect:/boardView/"+request.getParameter("bNum"); 
+		return "redirect:/";
 	}
 	
+	
+//	@RequestMapping(value="/boardModifyForm")
+//	public String boardModifyForm(/*@RequestParam("bNum")int bNum, Model model*/HttpServletRequest request)throws Exception {
+//		//model.addAttribute("board", boardservice.boardView(bNum));
+//		
+//		Board board = new Board();
+//		board.setbContent(request.getParameter("bContent"));
+//		board.setbTitle(request.getParameter("bTitle"));
+//		board.setbNum(Integer.parseInt(request.getParameter("bNum")));
+//		
+//		boardservice.boardModify(board);
+//		
+//		return "redirect:/boardView/"+request.getParameter("bNum"); 
+//	}
+//	
 //	@RequestMapping(value="/boardModify")
 //	public String boardModify(Board board) throws Exception {
 //		boardservice.boardModify(board);
