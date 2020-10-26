@@ -62,7 +62,7 @@ public class Controller {
 //		
 //	}
 	
-//	�Խñ۸��
+//	占쌉시글몌옙占�
 	/*
 	 * @RequestMapping(value = "/{page}/{range}", method=RequestMethod.GET) public
 	 * String home( Model model, )throws Exception{ page }
@@ -79,22 +79,22 @@ public class Controller {
 //		Criteria criteria = new Criteria();
 //		criteria.setCriteria(criteria);
 //		criteria.setTotalCount(boardListCnt);
-		//�˻�
+		//占싯삼옙
 		search.setSearchType(searchType);
 		search.setKeyword(keyword);
 		
-		//�˻�
+		//占싯삼옙
 		int listCnt = boardservice.boardListCnt(search);
 		search.pageInfo(page, range, listCnt);
 		
-		//��ü�Խñۼ�
+		//占쏙옙체占쌉시글쇽옙
 		List<Board> list = boardservice.selectBoardList(search);
 		
-		//����¡
+		//占쏙옙占쏙옙징
 		model.addAttribute("list",list);
 		model.addAttribute("pagingnation", search);
 		
-		//�Խñ�ȭ�����
+		//占쌉시깍옙화占쏙옙占쏙옙占�
 		model.addAttribute("boardList",boardservice.selectBoardList(search));
 		model.addAttribute("search",search);
 		
@@ -118,7 +118,7 @@ public class Controller {
 		Board board = boardservice.boardView(bNum);
 		model.addAttribute("comment", new Comment());
 		model.addAttribute("boardView", board);
-		//jsp�� boardView. �������� ����
+		//jsp占쏙옙 boardView. 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 		boardservice.updateHit(bNum);
 		return "/boardView";
 	}
@@ -137,7 +137,7 @@ public class Controller {
 		return "/boardModify";
 	}
 	
-	@RequestMapping(value="/boardModify") //위 boardModify 함수가져옴
+	@RequestMapping(value="/boardModify") //�쐞 boardModify �븿�닔媛��졇�샂
 	public String update(Board board) throws Exception {
 		boardservice.boardModify(board);
 		
@@ -198,7 +198,7 @@ public class Controller {
 	
 	@RequestMapping("/signup")
 	public String signup(User user) {
-		//��й�ȣ ��ȣȭ
+		//占쏙옙橘占싫� 占쏙옙호화
 		String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
 		
 		user.setPassword(encodedPassword);
@@ -208,7 +208,7 @@ public class Controller {
 		user.setCredentialsNonExpired(true);
 		user.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_USER"));
 		
-		//��������
+		//占쏙옙占쏙옙占쏙옙占쏙옙
 		userservice.createUser(user);
 		userservice.createAuthorities(user);
 		
@@ -239,7 +239,7 @@ public class Controller {
 	
 	@RequestMapping(value="/commentList")
 	@ResponseBody
-	public List<Comment> commentList( @RequestParam("bNum")int bNum) throws Exception{
+	public List<Comment> commentList( @RequestParam("bNum")int bNum, Model model) throws Exception{
 		List<Comment> list = (commentservice.commentList(bNum));
 		
 		return list;

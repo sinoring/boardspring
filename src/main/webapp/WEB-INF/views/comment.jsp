@@ -180,7 +180,7 @@ function commentList(){
 
 }  */ 
 
-	/* function commentModify(bNum, cDate){
+	/* function commentModify(bNum, cDate, cContent){
 	$.ajax({
 		url : "${pageContext.request.contextPath}/commentModify}",
 		type : "POST",
@@ -203,9 +203,9 @@ function commentList(){
 		}); 
 } */
 
-	 /* function commentDel(bNum){
+	  function commentDel(bNum){
 		$.ajax({
-				url : "/commentDelete",
+				url : '/commentDelete?cNum=' + cNum,
 				type : 'POST',
 				data : {bNum: ${boardView.bNum}},
 				dataType : 'text',
@@ -216,38 +216,8 @@ function commentList(){
 					,error: function(error){
 							console.log("에러" + error);
 						}
-				
-
 			})
-		}  */
-
-
-			/* var html = "";
-			var cCnt = data.length;
-
-			if(result.length > 0){
-					for(i=0; i<data.length; i++){
-						html += "<div>";
-						html += "<div><table class='table'><h6><strong>"+data[i].u_id+"</strong></h6>";
-						html += "</table></div>";
-						html += "</div>";
-						}
-				}else{
-					html += "<div>";
-					html += "<div><table class='table'><h6><strong>등록된 댓글이 없습니다.</strong></h6>"
-					html += "</div>";
-					}
-				$("#cCnt").html(cCnt);
-				$("#commentListForm").html(html);
-			},
-			error:function(request,status,error){
-				}
-		}); */
-
-
-
-
-
+		}  
 
 </script>
 
