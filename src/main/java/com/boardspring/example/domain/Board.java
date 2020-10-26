@@ -1,9 +1,5 @@
 package com.boardspring.example.domain;
 
-import java.util.List;
-
-
-
 public class Board {
 	private int bNum;
 	private int bId;
@@ -14,15 +10,16 @@ public class Board {
 	private String bDate;
 	private int bHit;
 	private String username;
-	private List<Comment> comment;
+	private Comment comment;
 
-
-	public List<Comment> getComment() {
+	
+	public Comment getComment() {
 		return comment;
 	}
-	public void setComment(List<Comment> comment) {
+	public void setComment(Comment comment) {
 		this.comment = comment;
 	}
+	
 	public String getUsername() {
 		return username;
 	}

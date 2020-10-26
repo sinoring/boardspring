@@ -71,6 +71,6 @@
 		DELETE FROM board where bNum = #{bNum}
 	</delete>
 	<update id="boardModify" parameterType="com.boardspring.example.domain.Board">
-		UPDATE board set bTitle = #{bTitle}, bContent = #{bContent} where bNum = #{bNum}
+		UPDATE board SET bTitle = #{bTitle}, bContent = #{bContent}, bUser = #{bUser} WHERE bNum = #{bNum}
 	</update>
 </mapper>

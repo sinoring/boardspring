@@ -14,7 +14,6 @@ public interface BoardMapper {
 	public void boardInsert(Board board) throws Exception;
 	public Board boardView(int bNum) throws Exception;
 	public boolean boardDel(int bNum) throws Exception ;
-	public void boardModifyForm(int bNum) throws Exception;
 	public void boardModify(Board board) throws Exception;
 	public boolean updateHit(int bNum) throws Exception;
 }

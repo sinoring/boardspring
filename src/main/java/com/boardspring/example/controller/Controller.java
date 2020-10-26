@@ -22,7 +22,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,7 +62,7 @@ public class Controller {
 //		
 //	}
 	
-//	°Ô½Ã±Û¸ñ·Ï
+//	ï¿½Ô½Ã±Û¸ï¿½ï¿½
 	/*
 	 * @RequestMapping(value = "/{page}/{range}", method=RequestMethod.GET) public
 	 * String home( Model model, )throws Exception{ page }
@@ -77,22 +79,22 @@ public class Controller {
 //		Criteria criteria = new Criteria();
 //		criteria.setCriteria(criteria);
 //		criteria.setTotalCount(boardListCnt);
-		//°Ë»ö
+		//ï¿½Ë»ï¿½
 		search.setSearchType(searchType);
 		search.setKeyword(keyword);
 		
-		//°Ë»ö
+		//ï¿½Ë»ï¿½
 		int listCnt = boardservice.boardListCnt(search);
 		search.pageInfo(page, range, listCnt);
 		
-		//ÀüÃ¼°Ô½Ã±Û¼ö
+		//ï¿½ï¿½Ã¼ï¿½Ô½Ã±Û¼ï¿½
 		List<Board> list = boardservice.selectBoardList(search);
 		
-		//ÆäÀÌÂ¡
+		//ï¿½ï¿½ï¿½ï¿½Â¡
 		model.addAttribute("list",list);
 		model.addAttribute("pagingnation", search);
 		
-		//°Ô½Ã±ÛÈ­¸éÃâ·Â
+		//ï¿½Ô½Ã±ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½
 		model.addAttribute("boardList",boardservice.selectBoardList(search));
 		model.addAttribute("search",search);
 		
@@ -116,7 +118,7 @@ public class Controller {
 		Board board = boardservice.boardView(bNum);
 		model.addAttribute("comment", new Comment());
 		model.addAttribute("boardView", board);
-		//jsp¿¡ boardView. Çü½ÄÀ¸·Î ÁöÁ¤
+		//jspï¿½ï¿½ boardView. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		boardservice.updateHit(bNum);
 		return "/boardView";
 	}
@@ -127,17 +129,45 @@ public class Controller {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="/boardModify")
-	public String boardModify(Board board) throws Exception {
+	@RequestMapping(value="/boardMod")
+	public String boardModify(@RequestParam("bNum")int bNum, Model model) throws Exception{
+		Board board = boardservice.boardView(bNum);
+		model.addAttribute("board", board);
+		
+		return "/boardModify";
+	}
+	
+	@RequestMapping(value="/boardModify") //ìœ„ boardModify í•¨ìˆ˜ê°€ì ¸ì˜´
+	public String update(Board board) throws Exception {
 		boardservice.boardModify(board);
 		
 		return "redirect:/";
 	}
 	
 	
-//	@RequestMapping(value="/boardModifyForm")
-//	public String boardModifyForm(/*@RequestParam("bNum")int bNum, Model model*/HttpServletRequest request)throws Exception {
-//		//model.addAttribute("board", boardservice.boardView(bNum));
+	sdsdffdfdf
+	
+	
+	
+	
+//	@RequestMapping(value="/boardModify")
+//	public String boardModifyForm(@RequestParam("bNum")int bNum, Board board, Model model) throws Exception {
+//        boardservice.boardModify(board);
+//		//Board board = boardservice.boardModify(board);
+//		return "/boardModify";
+//	}
+	
+//	@RequestMapping(value="/boardModify")
+//	public String boardModify(Board board) throws Exception {
+//		boardservice.boardModify(board);
+//		
+//		return "redirect:/";
+//	}
+	
+	
+//	@RequestMapping(value="/boardMod")
+//	public String boardModifyForm(@RequestParam("bNum")int bNum, Model model, HttpServletRequest request)throws Exception {
+//		model.addAttribute("board", boardservice.boardView(bNum));
 //		
 //		Board board = new Board();
 //		board.setbContent(request.getParameter("bContent"));
@@ -146,17 +176,17 @@ public class Controller {
 //		
 //		boardservice.boardModify(board);
 //		
-//		return "redirect:/boardView/"+request.getParameter("bNum"); 
+//		return "/boardMod";
 //	}
-//	
+	
 //	@RequestMapping(value="/boardModify")
 //	public String boardModify(Board board) throws Exception {
 //		boardservice.boardModify(board);
 //		
-//		return "redirect:/";
+//		return "/boardMod";
 //	}
 	
-//	@RequestMapping("/boardModify")
+//	@RequestMapping("/boardMod")
 //	public String boardMod(Board board) {
 //		return "redirect:/";
 //	}
@@ -168,7 +198,7 @@ public class Controller {
 	
 	@RequestMapping("/signup")
 	public String signup(User user) {
-		//ºñ¹Ð¹øÈ£ ¾ÏÈ£È­
+		//ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½È£È­
 		String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
 		
 		user.setPassword(encodedPassword);
@@ -178,7 +208,7 @@ public class Controller {
 		user.setCredentialsNonExpired(true);
 		user.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_USER"));
 		
-		//À¯Àú»ý¼º
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		userservice.createUser(user);
 		userservice.createAuthorities(user);
 		

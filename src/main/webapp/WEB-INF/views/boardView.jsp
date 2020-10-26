@@ -55,24 +55,25 @@ body {
 <h1 style="width:20px; margin:auto;">VIEW</h1>
      <article>
 		<div class="container" role="main">
-			
+			 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}">
 			<div class="bg-white rounded shadow-sm">
-				<div class="board_title"><c:out value="${boardview.bTitle}"/></div>
+				<div class="board_title" ><c:out value="${boardview.bTitle}"/></div>
 				<div class="board_info_box">
-					<span class="board_author"><c:out value="${boardView.bUser}"/></span><span class="board_date"><c:out value="${boardView.bDate}"/></span>
+					<span class="board_author" ><c:out value="${boardView.bUser}"/></span><span class="board_date"><c:out value="${boardView.bDate}"/></span>
 				</div>
-				<div class="board_content">${boardView.bContent}</div>
+				<div class="board_content" >${boardView.bContent}</div>
 
 			</div>
 		</div>
 	</article> 
 	
-    <sec:authorize access="isAuthenticated()">
+   
    	 <div style= "float:right;">
-     	   <input type="button" class="btn btn-sm btn-primary"  value="수정" onclick="location.href='/boardModify?bNum=${boardView.bNum}'">
+     	   <input type="button" class="btn btn-sm btn-primary"  value="수정" onclick="location.href='/boardMod?bNum=${boardView.bNum}'">
+     	  																			
      	   <input type="button" class="btn btn-sm btn-primary" id="btnDelete"  value="삭제" onclick="del(${boardView.bNum})">
    	 </div>
-    </sec:authorize>
+   
     <br>
     <br>
    
