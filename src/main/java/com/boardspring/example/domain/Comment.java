@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 public class Comment {
 	private int cNum;
 	private int bNum;
-	private String u_id;
 	private String cContent;
-	
+	private String u_id;
 	private Date cDate;
-	
+	private Date cDate_edit;
+
 	public String getU_id() {
 		return u_id;
 	}
@@ -44,6 +44,11 @@ public class Comment {
 	public void setcDate(Date cDate) {
 		this.cDate = cDate;
 	}
-	
+	public Date getcDate_edit() {
+		return cDate_edit;
+	}
+	public void setcDate_edit(Date cDate_edit) {
+		this.cDate_edit = cDate_edit;
+	}
 	
 }

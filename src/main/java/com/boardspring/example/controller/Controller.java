@@ -240,7 +240,7 @@ public class Controller {
 	@RequestMapping(value="/commentList")
 	@ResponseBody
 	public List<Comment> commentList( @RequestParam("bNum")int bNum, Model model) throws Exception{
-		List<Comment> list = (commentservice.commentList(bNum));
+		List<Comment> list = (commentservice.getReplyList(bNum));
 		
 		return list;
 	}
@@ -250,7 +250,7 @@ public class Controller {
 	public Map<String, Object> commentInsert(@RequestBody Comment comment) throws Exception{
 		Map<String, Object> success = new HashMap<>();
 		try {
-			commentservice.commentInsert(comment);
+			commentservice.saveReply(comment);
 			success.put("status", "OK");
 			} catch(Exception e) {
 		e.printStackTrace();
@@ -264,7 +264,7 @@ public class Controller {
 	public Map<String, Object> commentModify(@RequestBody Comment comment) throws Exception{
 		Map<String, Object> success = new HashMap<>();
 		try {
-			commentservice.commentModify(comment);
+			commentservice.updateReply(comment);
 			success.put("status", "OK");
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -274,19 +274,15 @@ public class Controller {
 		
 	}
 	
-	@RequestMapping(value="/commentDelete")
-	@ResponseBody
-	public Map<String, Object> commentDelete(@RequestParam("bNum")int bNum) throws Exception{
-		Map<String, Object> success = new HashMap<>();
-		try {
-			commentservice.commentDelete(bNum);
-			success.put("status", "OK");
-		} catch(Exception e) {
-			e.printStackTrace();
-			success.put("status", "false");
-		} 
-		return success;
-	}
+	/*
+	 * @RequestMapping(value="/commentDelete")
+	 * 
+	 * @ResponseBody public Map<String, Object>
+	 * commentDelete(@RequestParam("bNum")int bNum) throws Exception{ Map<String,
+	 * Object> success = new HashMap<>(); try { commentservice.deleteReply(cNum);
+	 * success.put("status", "OK"); } catch(Exception e) { e.printStackTrace();
+	 * success.put("status", "false"); } return success; }
+	 */
 	
 	
 	

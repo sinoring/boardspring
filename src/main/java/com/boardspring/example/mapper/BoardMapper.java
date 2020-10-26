@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.boardspring.example.domain.Board;
+import com.boardspring.example.domain.Comment;
 import com.boardspring.example.paging.Search;
 
 @Mapper
@@ -16,4 +17,6 @@ public interface BoardMapper {
 	public boolean boardDel(int bNum) throws Exception ;
 	public void boardModify(Board board) throws Exception;
 	public boolean updateHit(int bNum) throws Exception;
+	
+	
 }

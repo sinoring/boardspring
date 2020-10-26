@@ -8,35 +8,28 @@ import org.springframework.stereotype.Service;
 import com.boardspring.example.domain.Comment;
 import com.boardspring.example.mapper.CommentMapper;
 
-@Service("CommentServiceImpl")
+@Service
 public class CommentServiceImpl implements CommentService {
 	@Autowired CommentMapper commentmapper;
 	
 	@Override
-	public List<Comment> commentList(int bNum) throws Exception{
-		return commentmapper.commentList(bNum);
+	public List<Comment> getReplyList(int bNum) throws Exception{
+		return commentmapper.getReplyList(bNum);
+	}
+	
+	@Override
+	public int saveReply(Comment comment) throws Exception{
+		return commentmapper.saveReply(comment);
+	}
+	
+	@Override
+	public int updateReply(Comment comment) throws Exception{
+		return commentmapper.updateReply(comment);
 	}
 
 	@Override
-	public int commentInsert(Comment comment) throws Exception{
-		return commentmapper.commentInsert(comment);
+	public int deleteReply(int cNum) throws Exception{
+		return commentmapper.deleteReply(cNum);
 	}
-	
-	@Override
-	public int commentModify(Comment comment) throws Exception{
-		return commentmapper.commentModify(comment);
-	}
-	
-	@Override
-	public int commentDelete(int cNum) throws Exception{
-		return commentmapper.commentDelete(cNum);
-	}
-
-	@Override
-	public int commentCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 	
 }

@@ -56,11 +56,11 @@
 	</insert>
 	
 	<select id="boardView" parameterType="int" resultType="com.boardspring.example.domain.Board">
-		SELECT * 
+		<!-- SELECT * 
 		FROM board ta
 		LEFT join comment tb ON ta.bNum = tb.bNum
-		WHERE ta.bNum = #{bNum}
-	
+		WHERE ta.bNum = #{bNum} -->
+		SELECT * FROM board WHERE bNum = #{bNum}
 	</select>
 	
 	

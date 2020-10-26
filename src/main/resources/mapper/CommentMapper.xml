@@ -6,28 +6,38 @@
 		SELECT COUNT(*) FROM comment
 	</select>
 	
-	<select id="commentList" resultType="com.boardspring.example.domain.Comment">
-		SELECT * FROM comment 
-		ORDER BY bNum DESC
+	<select id="getReplyList" resultType="com.boardspring.example.domain.Comment">
+		SELECT 
+			cNum
+			,bNum
+			,cContent
+			,u_id
+			,cDate
+			,cDate_edit
+		FROM
+			tbl_reply
+		WHERE
+			bNum = ${bNum}
+		ORDER BY cDate
 	</select>
 	
-	<insert id="commentInsert" parameterType="com.boardspring.example.domain.Comment">
+	<insert id="saveReply" parameterType="com.boardspring.example.domain.Comment">
 		INSERT INTO
-		comment(bNum, cContent, u_id, cDate)
-		VALUES(#{bNum}, #{cContent}, #{u_id}, now())
+		tbl_reply(bNum, cContent, u_id, cDate, cDate_edit)
+		VALUES(#{bNum}, #{cContent}, #{u_id}, now(), now())
 	</insert>
 	
-	<update id="commentModify" parameterType="com.boardspring.example.domain.Comment" >
-		UPDATE comment
+	<update id="updateReply" parameterType="com.boardspring.example.domain.Comment" >
+		UPDATE tbl_reply
 		SET
 		cContent = #{cContent}
-		WHERE CNum = #{cNum}
+		,cDate_edit = now()
+		WHERE cNum = #{cNum}
 	</update>
 	
-	<delete id="commentDelete" parameterType="int">
-		DELETE FROM comment WHERE cNum = #{cNum}
+	<delete id="deleteReply" parameterType="int">
+		DELETE FROM tbl_reply WHERE cNum = #{cNum}
 	</delete>
-
 
 </mapper>
 	

@@ -36,7 +36,8 @@
 							<textarea style="width: 1100px" rows="3" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력해주세요."></textarea>
 							
 							<div>
-								<a href="#" onClick="fn_comment()" class="btn pull-right btn-success">등록</a>
+								<button type="button" class="btn btn-sm btn-primary" id="btnReplySave" style="width: 100%; margin-top: 10px"> 저장 </button>
+
 							</div>
 						</td>
 					</tr>
@@ -46,24 +47,146 @@
 		<input type="hidden" id="bNum" name="bNum" value="${boardView.bNum}" />
 	</form>
 </div>
-<div class="container">
-	<form id="commentListForm" name="commentListForm" method="post">
-		<div id="commentList"></div>
-	</form>
-</div>
+<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
+	<h6 class="border-bottom pb-2 mb-0">Reply list</h6>
+	<div id="replyList"></div>
+</div> 
+
 
 
 
 <script type="text/javascript">
 
 $(document).ready(function(){
-	commentList();
+	showReplyList();
 });
 
 
 //댓글등록
 
-function fn_comment(){
+function showReplyList(){
+	$.ajax({
+		type : 'POST',
+		url : "${pageContext.request.contextPath}/restBoard/getReplyList",
+		data : { bNum: $('#bNum').val() },
+		dataType : "json",
+		success : function(result){
+			var htmls = "";
+				if(result.length < 1){
+					htmls.push("등록된 댓글이 없습니다.");
+					} else{
+						$(result).each(function(){
+							htmls += '<div class="media text-muted pt-3" id="cNum" + this.cNum + "">';
+							htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
+							htmls += '<title>Placeholder</title>';
+							htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
+							htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
+							htmls += '</svg>';
+							htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
+							htmls += '<span class="d-block">';
+							htmls += '<strong class="text-gray-dark">' + this.u_id + '</strong>';
+							htmls += '<span style="padding-left: 7px; font-size: 9px">';
+							htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.cNum + ', \'' + this.u_id + '\', \'' + this.cContent + '\' )" style="padding-right:5px">수정</a>';
+		                    htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.cNum + ')" >삭제</a>';
+		                    htmls += '</span>';
+		                    htmls += '</span>';
+		                    htmls += '<br>';
+		                    htmls += this.cContent;
+		                    htmls += '</p>';
+		                    htmls += '</div>';
+							});
+						}
+						$("#replyList").html(htmls);
+			}
+		});
+}
+
+
+$(document).on('click', '#btnReplySave' , function(){
+
+	$.ajax({
+		url : "${pageContext.request.contextPath}/restBoard/saveReply",
+		type : 'POST',
+		contentType: 'application/json',
+		dataType : 'text',
+		data : JSON.stringify(
+				{
+					cContent: $('#cContent').val(), 
+					bNum: ${boardView.bNum},
+					u_id: '${user.username }'
+					
+					}
+				),
+		success : function(result){
+			showReplyList();
+			$('#cContent').val("");
+			$('#u_id').val("");
+			//$("#replyList").append(data);
+			}
+		, error : function(error){
+			console.log("에러:" + error);
+			
+			}
+		});
+});
+
+
+function fn_editReply(cNum, u_id, cContent){
+	var htmls = "";
+
+	htmls += '<div class="media text-muted pt-3" id="rid' + cNum + '">';
+	htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
+	htmls += '<title>Placeholder</title>';
+	htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
+	htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
+	htmls += '</svg>';
+	htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
+	htmls += '<span class="d-block">';
+	htmls += '<strong class="text-gray-dark">' + u_id + '</strong>';
+	htmls += '<span style="padding-left: 7px; font-size: 9pt">';
+	htmls += '<a href="javascript:void(0)" onclick="fn_updateReply(' + cNum + ', \'' + u_id + '\')" style="padding-right:5px">저장</a>';
+	htmls += '<a href="javascript:void(0)" onClick="showReplyList()">취소<a>';
+	htmls += '</span>';
+	htmls += '</span>';		
+	htmls += '<textarea name="editContent" id="editContent" class="form-control" rows="3">';
+	htmls += cContent;
+	htmls += '</textarea>';
+	
+	htmls += '</p>';
+	htmls += '</div>';
+	
+	$('#cNum' + cNum).replaceWith(htmls);
+	$('#cNum' + cNum + '#editContent').focus(); 
+
+}
+
+function fn_updateReply(cNum, u_id){
+	$.ajax({
+		url : "${pageContext.request.contextPath}/restBoard/updateReply",
+		Content-Type : "application/json",
+		data : JSON.stringify({
+				"content" : replyEditContent,
+				"cNum" : cNum
+			});
+		type : 'POST',
+		dataType : 'text',
+		success: function(result){
+			console.log(result);
+			showReplyList();
+			}
+			,error : function(error){
+				console.log("에러 : " + error);
+				}
+		});
+}
+
+
+
+
+
+
+
+/* function fn_comment(){
 	
 	$.ajax({
 		type : 'POST',
@@ -92,66 +215,7 @@ function fn_comment(){
 		}
 	});
 
-}
-
-
-
-//초기페이지 로딩시 댓글 불러오기
-
-
-
-
-//댓글불러오기
-
-function commentList(){
-	$.ajax({
-		type : 'GET',
-		url : "/commentList",
-		dataType : "json",
-		/*data : $("#commentForm").serialize()  */
-		data : { bNum: $('#bNum').val() },
-		//serialize 메소드를 사용하면 form에있는 객체들을 한번에 불러올수이씀
-		contentType: 'application/json',
-		// ajax 요청을할때 디폴트 콘텐트타입
-		success : function(data){
-			console.log(data[12].cContent);
-			var htmls = "";
-			if(data.length < 1){
-				htmls.push("등록된 댓글이 없습니다.");
-			} else{
-				$(data).each(function(){
-					/* htmls += "<div>";
-					htmls += "<div><table class='table'><h6><strong>"+data[i].username+"</strong></h6>";
-					htmls += "</table></div>";
-					htmls += "</div>"; */
-					htmls += '<div class="media text-muted pt-3" id="bNum" + this.bNum + "">';
-					htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
-					htmls += '<title>Placeholder</title>';
-					//htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
-					//htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
-					htmls += '</svg>';
-					htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
-					htmls += '<span class="d-block">';
-					htmls += '<strong class="text-gray-dark">' + this.cDate + '</strong>';
-					htmls += '<span style="padding-left: 7px; font-size: 9px">';
-					htmls += '<a href="javascript:void(0)" onclick="commentEditModify(' + this.bNum + ', \'' + this.cDate + '\', \'' + this.cContent + '\' )" style="padding-right:5px">수정</a>';
-                    htmls += '<a href="javascript:void(0)" onclick="commentDel(' + this.bNum + ')" >삭제</a>';
-                    htmls += '</span>';
-                    htmls += '</span>';
-                    htmls += '<br>';
-                    htmls += this.cContent;
-                    htmls += '</p>';
-                    htmls += '</div>';
-				});
-			}
-			$("#commentList").html(htmls);
-		},
-		error : function(error) {
-	        console.dir(error);
-	    }
-	});
-}
-
+} */
 
 
  /* function commentEditModify(bNum, cDate, cContent){
@@ -203,7 +267,7 @@ function commentList(){
 		}); 
 } */
 
-	  function commentDel(bNum){
+	/*   function commentDel(bNum){
 		$.ajax({
 				url : '/commentDelete?cNum=' + cNum,
 				type : 'POST',
@@ -217,7 +281,7 @@ function commentList(){
 							console.log("에러" + error);
 						}
 			})
-		}  
+		}  */ 
 
 </script>
 
