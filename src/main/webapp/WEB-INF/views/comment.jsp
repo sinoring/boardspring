@@ -14,7 +14,7 @@
 <script src="${path}/ckeditor/ckeditor.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> -->
 <link rel="stylesheet" href="/css/bootstrap.css">
 <meta charset="EUC-KR">
 <title>Insert title here</title>
@@ -29,7 +29,7 @@
 			<div>
 				<span><strong>Comments</strong></span> <span id="cCnt"></span>
 			</div>
-			<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
+			<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px;">
 				<table class="table">
 					<tr>
 						<td>
@@ -48,7 +48,7 @@
 	</form>
 </div>
 <div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
-	<h6 class="border-bottom pb-2 mb-0">Reply list</h6>
+	<h6 class="border-bottom pb-2 mb-0" style="text-align:center">Reply list</h6>
 	<div id="replyList"></div>
 </div> 
 
@@ -76,23 +76,25 @@ function showReplyList(){
 					htmls.push("등록된 댓글이 없습니다.");
 					} else{
 						$(result).each(function(){
-							htmls += '<div class="media text-muted pt-3" id="cNum" + this.cNum + "">';
+							htmls += '<div style="width:1090px; margin:auto;';
+							htmls += '<div class="media text-muted pt-3"  id="cNum">' + this.cNum + "";
 							htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
 							htmls += '<title>Placeholder</title>';
-							htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
-							htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
+							//htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
+							//htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
 							htmls += '</svg>';
 							htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
 							htmls += '<span class="d-block">';
 							htmls += '<strong class="text-gray-dark">' + this.u_id + '</strong>';
-							htmls += '<span style="padding-left: 7px; font-size: 9px">';
+							htmls += '<span style="padding-left: 7px; font-size: 12px">';
 							htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.cNum + ', \'' + this.u_id + '\', \'' + this.cContent + '\' )" style="padding-right:5px">수정</a>';
 		                    htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.cNum + ')" >삭제</a>';
 		                    htmls += '</span>';
 		                    htmls += '</span>';
 		                    htmls += '<br>';
-		                    htmls += this.cContent;
+		                    htmls += '<div style="font-size:18px">'+this.cContent;
 		                    htmls += '</p>';
+		                    htmls += '</div>';
 		                    htmls += '</div>';
 							});
 						}
@@ -134,7 +136,7 @@ $(document).on('click', '#btnReplySave' , function(){
 function fn_editReply(cNum, u_id, cContent){
 	var htmls = "";
 
-	htmls += '<div class="media text-muted pt-3" id="rid' + cNum + '">';
+	htmls += '<div class="media text-muted pt-3" id="cNum' + cNum + '">';
 	htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
 	htmls += '<title>Placeholder</title>';
 	htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
@@ -163,11 +165,11 @@ function fn_editReply(cNum, u_id, cContent){
 function fn_updateReply(cNum, u_id){
 	$.ajax({
 		url : "${pageContext.request.contextPath}/restBoard/updateReply",
-		Content-Type : "application/json",
+		contentType : "application/json","X-HTTP-Method-Override" : "POST",
 		data : JSON.stringify({
-				"content" : replyEditContent,
+				"cContent" : $('#editContent').val(),
 				"cNum" : cNum
-			});
+			}),
 		type : 'POST',
 		dataType : 'text',
 		success: function(result){
@@ -181,6 +183,21 @@ function fn_updateReply(cNum, u_id){
 }
 
 
+function fn_deleteReply(cNum){
+	$.ajax({
+		url : "${pageContext.request.contextPath}/restBoard/deleteReply",
+		data : {cNum : cNum},
+		type : 'POST',
+		dataType : 'text',
+		success : function(result){
+			showReplyList();
+
+			}
+			,error : function(error){
+				console.log("에러: " + error);
+				}
+		});
+}
 
 
 

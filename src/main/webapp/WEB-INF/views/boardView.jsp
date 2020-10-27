@@ -52,7 +52,7 @@ body {
 
 </head>
 <body>
-<h1 style="width:20px; margin:auto;">VIEW</h1>
+<h1 style="width:50px; margin:auto;">VIEW</h1>
      <article>
 		<div class="container" role="main">
 			 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}">

@@ -34,7 +34,7 @@ public class RestBoardController {
 	@RequestMapping(value="/saveReply" , method = RequestMethod.POST)
 	public Map<String, Object> saveReply(@RequestBody Comment comment) throws Exception{
 		Map<String, Object> result = new HashMap<>();
-		//jsp if¹®¿¡ÀÖ´ø result
+		//jsp ifï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ result
 		
 		try {
 			commentService.saveReply(comment);
@@ -63,6 +63,21 @@ public class RestBoardController {
 		
 	}
 	
+	@RequestMapping(value="/deleteReply")
+	public Map<String, Object> deleteReply (@RequestParam("cNum") int cNum ) throws Exception{
+		Map<String, Object> result = new HashMap<>();
+		
+		try {
+			commentService.deleteReply(cNum);
+			result.put("status", "ok");
+		} catch(Exception e) {
+			e.printStackTrace();
+			result.put("status", "false");
+		}
+		
+		return result;
+		
+	}
 	
 	
 	
